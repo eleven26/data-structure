@@ -235,6 +235,50 @@ int FindList(struct SeqList *L, ElemType e){
 	return -1;
 }//FindList
 
+Status compare(ElemType e, ElemType e1){
+	return e<e1 ? TRUE : FALSE;
+}
+
+int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e, ElemType e1)){
+	//返回L中第一个与e满足关系compare()的数据元素的位置
+	//若这样的元素不存在，则返回-1
+	for (int i = 0; i < L->maxSize; i++){
+		if (L->list[i].is_used == 1 && compare(e, L->list[i].value)){
+			return i;
+		}
+	}
+	return -1;
+}//LocateElem
+
+ElemType PriorElem(struct SeqList *L, int pos){
+	//若pos有数据元素，且不是第一个，则返回它的前驱，否则操作失败
+	if (L->size>1 && pos != 0){
+		if (L->list[pos - 1].is_used == 1){
+			return L->list[pos - 1].value;
+		}
+		else
+		{
+			printf("该元素前驱元素为空!\n");
+			return 0;
+		}
+	}
+	return ERROR;
+}//PriorElem
+
+ElemType NextElem(struct SeqList *L, int pos){
+	//若pos有数据元素，且不是最后一个，则返回它的后继，否则操作失败
+	if (L->size>1 && pos < L->maxSize-1){
+		if (L->list[pos + 1].is_used == 1){
+			return L->list[pos + 1].value;
+		}
+		else
+		{
+			printf("该元素后继元素为空!\n");
+			return 0;
+		}
+	}
+	return ERROR;
+}//NextElem
 
 
 int main(){
@@ -270,6 +314,10 @@ int main(){
 	//traverseList(&L);
 	printf("maxSize:%d\n", J->size);
 	printf("遍历结果:%d\n", ListTraverse(&L,visit));
+
+	printf("大于21的第一个元素位置 %d\n", LocateElem(&L, 21, compare));
+
+	printf("位置11的前驱元素为:%d\n", PriorElem(&L, 1));
 
 	printf("sizeof(L)=%d\n", sizeof(L)); 
 	//L始终等于4的原因是，当L作为参数传递的时候，"退化"为指针，sizeof只能得到指针对应类型的长度.

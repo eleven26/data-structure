@@ -66,20 +66,12 @@ ElemType deleteLastList(struct SeqList *L);
 ElemType deletePosList(struct SeqList *L, int pos);
 //从线性表L中删除位置pos的元素
 
-//==========================================================
-
-Status LocateElem(List L, ElemType e, Status(*compare));
+int LocateElem(struct SeqList *L, ElemType e, Status(*compare));
 //返回L中第一个与e满足关系compare()的数据元素的位置
-//若这样的元素不存在，则返回0
+//若这样的元素不存在，则返回-1
 
-Status PriorElem(List L, ElemType cur_e, ElemType &pre_e);
-//若cur_e是L的数据元素，且不是第一个，则用pre_e返回它的前驱，否则操作失败
+ElemType PriorElem(struct SeqList *L, int pos);
+//若pos有数据元素，且不是第一个，则返回它的前驱，否则操作失败
 
-Status NextElem(List L, ElemType cur_e, ElemType &next_e);
-//若cur_e是L的数据元素，且不是最后一个，则用next_e返回它的前驱，否则操作失败
-
-Status ListInsert(List &L, int i, ElemType e);
-//在L中的第i个位置之前插入新的数据元素e，L的长度+1
-
-Status ListDelete(List &L, int i, ElemType &e);
-//删除Ｌ的第ｉ个数据元素，并且用ｅ返回其值，Ｌ的长度－１
+ElemType NextElem(struct SeqList *L, int pos);
+//若pos有数据元素，且不是最后一个，则返回它的后继，否则操作失败
