@@ -39,7 +39,7 @@ ElemType GetElem(struct SeqList *L, int pos);
 Status PutElem(struct SeqList *L, int pos, ElemType e);
 //在位置i插入元素e
 
-Status ListTraverse(struct SeqList *L, Status(*visit));
+Status ListTraverse(struct SeqList *L, Status visit(ElemType e));
 //依次对L的每个数据元素调用函数visit，一旦visit()失败，则操作失败。
 
 int FindList(struct SeqList *L, ElemType e);
@@ -47,6 +47,9 @@ int FindList(struct SeqList *L, ElemType e);
 
 Status UpdatePosElem(struct SeqList *L, int pos, ElemType e);
 //直接替换线性表位置pos的元素，而不改变其他元素的位置
+
+Status InsertElem(struct SeqList *L, ElemType e);
+//遍历线性表，如果有空闲位置则插入，没有则重新分配内存再插入
 
 void InsertFirstList(struct SeqList *L, ElemType e);
 //向线性表L的表头插入元素e
@@ -75,3 +78,6 @@ ElemType PriorElem(struct SeqList *L, int pos);
 
 ElemType NextElem(struct SeqList *L, int pos);
 //若pos有数据元素，且不是最后一个，则返回它的后继，否则操作失败
+
+void UnionList(struct SeqList *LA, struct SeqList LB);
+//将所有在线性表LB中但不在LA中的数据元素插入到LA中

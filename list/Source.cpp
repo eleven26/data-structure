@@ -76,7 +76,7 @@ ElemType GetElem(struct SeqList *L, int pos){
 		printf("元素序号越界");
 		return OVERLOW;
 	}
-	if (L->list[pos - 1].is_used = 0){
+	if (L->list[pos - 1].is_used == 0){
 		printf("该位置没有元素！");
 		return ERROR;
 	}
@@ -97,6 +97,7 @@ void MoveList(struct SeqList *L, int pos){
 			L->list[i].value = L->list[i - 1].value;
 			L->list[i].is_used = L->list[i - 1].is_used;
 			L->list[i - 1].is_used = 0; //i-1位置的元素已经移动到i位置
+			L->list[i - 1].value = 0;
 		}
 	}
 }//MoveList
@@ -148,6 +149,7 @@ void InsertFirstList(struct SeqList *L, ElemType e){
 	MoveList(L, 0);
 	L->list[0].value = e;
 	L->list[0].is_used = 1;
+	L->size++;
 }//InsertFirstList
 
 void InsertLastList(struct SeqList *L, ElemType e){
@@ -157,6 +159,7 @@ void InsertLastList(struct SeqList *L, ElemType e){
 	}
 	L->list[L->maxSize - 1].value = e;
 	L->list[L->maxSize - 1].is_used = 1;
+	L->size++;
 }//InsertLastList
 
 ElemType deleteElem(struct SeqList *L, int pos){
@@ -235,20 +238,31 @@ int FindList(struct SeqList *L, ElemType e){
 	return -1;
 }//FindList
 
-Status compare(ElemType e, ElemType e1){
-	return e<e1 ? TRUE : FALSE;
+Status lessthan(ElemType e1, ElemType e2){
+	return e1<e2 ? TRUE : FALSE;
 }
 
-int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e, ElemType e1)){
-	//返回L中第一个与e满足关系compare()的数据元素的位置
-	//若这样的元素不存在，则返回-1
-	for (int i = 0; i < L->maxSize; i++){
-		if (L->list[i].is_used == 1 && compare(e, L->list[i].value)){
-			return i;
-		}
+Status InsertElem(struct SeqList *L, ElemType e){
+	//遍历线性表，如果有空闲位置则插入，没有则重新分配内存再插入
+	if (L->size == L->maxSize){
+		reMalloc(L, L->maxSize + 1);
+		L->list[L->maxSize - 1].is_used = 1;
+		L->list[L->maxSize - 1].value = e;
+		L->size++;
+		return OK;
 	}
-	return -1;
-}//LocateElem
+	else{
+		for (int i = 0; i < L->maxSize; i++){
+			if (L->list[i].is_used == 0){
+				L->list[i].is_used = 1;
+				L->list[i].value = e;
+				L->size++;
+				return OK;
+			}
+		}
+		return ERROR;
+	}
+}//InsertElem
 
 ElemType PriorElem(struct SeqList *L, int pos){
 	//若pos有数据元素，且不是第一个，则返回它的前驱，否则操作失败
@@ -280,6 +294,36 @@ ElemType NextElem(struct SeqList *L, int pos){
 	return ERROR;
 }//NextElem
 
+Status equal(ElemType e1, ElemType e2){
+	return e1 == e2 ? TRUE : FALSE;
+}
+
+int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e1, ElemType e2)){
+	//返回L中第一个与e满足关系compare()的数据元素的位置
+	//若这样的元素不存在，则返回-1
+	for (int i = 0; i < L->maxSize; i++){
+		if (L->list[i].is_used == 1 && compare(e, L->list[i].value)){
+			return i;
+		}
+	}
+	return -1;
+}//LocateElem
+
+void UnionList(struct SeqList *LA, struct SeqList *LB){
+	//将所有在线性表LB中但不在LA中的数据元素插入到LA中
+	int LA_len = ListLength(LA), LB_len = ListLength(LB);
+	ElemType e;
+	for (int i = 1; i <= LB_len; i++){
+		if (LB->list[i-1].is_used == 1){
+			e = GetElem(LB, i); //取LB中第i个数据元素赋给e
+			if (LocateElem(LA, e, equal) == -1){
+				//LA中不存在和e相同的数据元素则插入之
+				InsertElem(LA, e);
+			}
+		}
+	}
+}//UnionList
+
 
 int main(){
 	struct SeqList L;
@@ -298,9 +342,13 @@ int main(){
 
 	InsertFirstList(&L, 21);
 	InsertLastList(&L, 22);
+	traverseList(&L);
+	printf("is used?=================== %d\n", J->list[11].is_used); //InsertFirstList之后，原来在10的现在在11了，J->list[10].is_used=0了
 	deleteElem(&L, 10);
+	traverseList(&L);
 
-	printf("insert test list[%d]=: %d\n", 0, J->list[0].value);
+	printf("10 is used ?=: %d\n", J->list[10].is_used);
+	printf("10 value ?=: %d\n", J->list[10].value);
 
 	Status state2 = PutElem(&L, 11, 10);
 	printf("insert test list[%d]=: %d\n", 10, J->list[10].value);
@@ -315,13 +363,21 @@ int main(){
 	printf("maxSize:%d\n", J->size);
 	printf("遍历结果:%d\n", ListTraverse(&L,visit));
 
-	printf("大于21的第一个元素位置 %d\n", LocateElem(&L, 21, compare));
+	printf("大于21的第一个元素位置 %d\n", LocateElem(&L, 21, lessthan));
 
 	printf("位置11的前驱元素为:%d\n", PriorElem(&L, 1));
 
 	printf("sizeof(L)=%d\n", sizeof(L)); 
 	//L始终等于4的原因是，当L作为参数传递的时候，"退化"为指针，sizeof只能得到指针对应类型的长度.
 	
+	printf("\nunion测试\n");
+	struct SeqList LB;
+	InitList(&LB, 5);
+	InsertElem(&LB, 25);
+	InsertFirstList(&LB, 26);
+	UnionList(&L, &LB);
+	traverseList(&L);
+	traverseList(&LB);
 	
 	
 	getchar();
