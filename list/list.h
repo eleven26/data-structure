@@ -2,82 +2,80 @@
 
 typedef int ElemType;
 struct node{
-	ElemType value; //ÔªËØµÄÖµ
-	int is_used; //1±íÊ¾ÕıÔÚÊ¹ÓÃ£¬0±íÊ¾¿ÕÏĞ
+	ElemType value; //å…ƒç´ çš„å€¼
+	int is_used; //1è¡¨ç¤ºæ­£åœ¨ä½¿ç”¨ï¼Œ0è¡¨ç¤ºç©ºé—²
 };
-
-typedef node* List;
 
 struct SeqList
 {
 	node *list;
-	int size;  //¼ÇÂ¼µ±Ç°³¤¶È
-	int maxSize; //¼ÇÂ¼×î´ó¿ÉÈİÄÉµÄ³¤¶È
+	int size;  //è®°å½•å½“å‰é•¿åº¦
+	int maxSize; //è®°å½•æœ€å¤§å¯å®¹çº³çš„é•¿åº¦
 };
 
 void reMalloc(struct SeqList *L, int newSize);
-//ÖØĞÂ·ÖÅäÏßĞÔ±íÄÚ´æ
+//é‡æ–°åˆ†é…çº¿æ€§è¡¨å†…å­˜
 
 Status InitList(struct SeqList *L, int MaxSize);
-//¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔ±í
+//æ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§è¡¨
 
 Status Destroy(struct SeqList *L);
-//Ïú»ÙÏßĞÔ±íL
+//é”€æ¯çº¿æ€§è¡¨L
 
 Status ClearList(struct SeqList *L);
-//½«LÖØÖÃÎª¿Õ±í
+//å°†Lé‡ç½®ä¸ºç©ºè¡¨
 
 Status ListEmpty(struct SeqList *L);
-//ÈôLÎª¿Õ±í£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+//è‹¥Lä¸ºç©ºè¡¨ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 
 int ListLength(struct SeqList *L);
-//·µ»ØLÖĞÔªËØµÄ¸öÊı
+//è¿”å›Lä¸­å…ƒç´ çš„ä¸ªæ•°
 
 ElemType GetElem(struct SeqList *L, int pos);
-//ÓÃe·µ»ØLÖĞµÚi¸öÊı¾İÔªËØµÄÖµ
+//ç”¨eè¿”å›Lä¸­ç¬¬iä¸ªæ•°æ®å…ƒç´ çš„å€¼
 
 Status PutElem(struct SeqList *L, int pos, ElemType e);
-//ÔÚÎ»ÖÃi²åÈëÔªËØe
+//åœ¨ä½ç½®iæ’å…¥å…ƒç´ e
 
 Status ListTraverse(struct SeqList *L, Status visit(ElemType e));
-//ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvisit£¬Ò»µ©visit()Ê§°Ü£¬Ôò²Ù×÷Ê§°Ü¡£
+//ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°visitï¼Œä¸€æ—¦visit()å¤±è´¥ï¼Œåˆ™æ“ä½œå¤±è´¥ã€‚
 
 int FindList(struct SeqList *L, ElemType e);
-//´ÓÏßĞÔ±íÖĞ²éÕÒÖµÓëeÏàµÈµÄÔªËØ£¬Èô²éÕÒ³É¹¦·µ»ØÆäÎ»ÖÃ£¬·ñÔò·µ»Ø-1
+//ä»çº¿æ€§è¡¨ä¸­æŸ¥æ‰¾å€¼ä¸eç›¸ç­‰çš„å…ƒç´ ï¼Œè‹¥æŸ¥æ‰¾æˆåŠŸè¿”å›å…¶ä½ç½®ï¼Œå¦åˆ™è¿”å›-1
 
 Status UpdatePosElem(struct SeqList *L, int pos, ElemType e);
-//Ö±½ÓÌæ»»ÏßĞÔ±íÎ»ÖÃposµÄÔªËØ£¬¶ø²»¸Ä±äÆäËûÔªËØµÄÎ»ÖÃ
+//ç›´æ¥æ›¿æ¢çº¿æ€§è¡¨ä½ç½®posçš„å…ƒç´ ï¼Œè€Œä¸æ”¹å˜å…¶ä»–å…ƒç´ çš„ä½ç½®
 
 Status InsertElem(struct SeqList *L, ElemType e);
-//±éÀúÏßĞÔ±í£¬Èç¹ûÓĞ¿ÕÏĞÎ»ÖÃÔò²åÈë£¬Ã»ÓĞÔòÖØĞÂ·ÖÅäÄÚ´æÔÙ²åÈë
+//éå†çº¿æ€§è¡¨ï¼Œå¦‚æœæœ‰ç©ºé—²ä½ç½®åˆ™æ’å…¥ï¼Œæ²¡æœ‰åˆ™é‡æ–°åˆ†é…å†…å­˜å†æ’å…¥
 
 void InsertFirstList(struct SeqList *L, ElemType e);
-//ÏòÏßĞÔ±íLµÄ±íÍ·²åÈëÔªËØe
+//å‘çº¿æ€§è¡¨Lçš„è¡¨å¤´æ’å…¥å…ƒç´ e
 
 void InsertLastList(struct SeqList *L, ElemType e);
-//ÏòÏßĞÔ±íLµÄ±íÎ²²åÈëÔªËØe
+//å‘çº¿æ€§è¡¨Lçš„è¡¨å°¾æ’å…¥å…ƒç´ e
 
 ElemType deleteElem(struct SeqList *L, int pos);
-//É¾³ıÎ»ÖÃposµÄÔªËØ
+//åˆ é™¤ä½ç½®posçš„å…ƒç´ 
 
 ElemType deleteFirstList(struct SeqList *L);
-//´ÓÏßĞÔ±íLÖĞÉ¾³ı±íÍ·ÔªËØ²¢·µ»ØËü£¬ÈôÉ¾³ıÊ§°Ü·µ»Ø´íÎó´úÂë
+//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤è¡¨å¤´å…ƒç´ å¹¶è¿”å›å®ƒï¼Œè‹¥åˆ é™¤å¤±è´¥è¿”å›é”™è¯¯ä»£ç 
 
 ElemType deleteLastList(struct SeqList *L);
-//´ÓÏßĞÔ±íLÖĞÉ¾³ı±íÎ²ÔªËØ²¢·µ»ØËü£¬ÈôÉ¾³ıÊ§°Ü·µ»Ø´íÎó´úÂë
+//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤è¡¨å°¾å…ƒç´ å¹¶è¿”å›å®ƒï¼Œè‹¥åˆ é™¤å¤±è´¥è¿”å›é”™è¯¯ä»£ç 
 
 ElemType deletePosList(struct SeqList *L, int pos);
-//´ÓÏßĞÔ±íLÖĞÉ¾³ıÎ»ÖÃposµÄÔªËØ
+//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤ä½ç½®posçš„å…ƒç´ 
 
 int LocateElem(struct SeqList *L, ElemType e, Status(*compare));
-//·µ»ØLÖĞµÚÒ»¸öÓëeÂú×ã¹ØÏµcompare()µÄÊı¾İÔªËØµÄÎ»ÖÃ
-//ÈôÕâÑùµÄÔªËØ²»´æÔÚ£¬Ôò·µ»Ø-1
+//è¿”å›Lä¸­ç¬¬ä¸€ä¸ªä¸eæ»¡è¶³å…³ç³»compare()çš„æ•°æ®å…ƒç´ çš„ä½ç½®
+//è‹¥è¿™æ ·çš„å…ƒç´ ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›-1
 
 ElemType PriorElem(struct SeqList *L, int pos);
-//ÈôposÓĞÊı¾İÔªËØ£¬ÇÒ²»ÊÇµÚÒ»¸ö£¬Ôò·µ»ØËüµÄÇ°Çı£¬·ñÔò²Ù×÷Ê§°Ü
+//è‹¥posæœ‰æ•°æ®å…ƒç´ ï¼Œä¸”ä¸æ˜¯ç¬¬ä¸€ä¸ªï¼Œåˆ™è¿”å›å®ƒçš„å‰é©±ï¼Œå¦åˆ™æ“ä½œå¤±è´¥
 
 ElemType NextElem(struct SeqList *L, int pos);
-//ÈôposÓĞÊı¾İÔªËØ£¬ÇÒ²»ÊÇ×îºóÒ»¸ö£¬Ôò·µ»ØËüµÄºó¼Ì£¬·ñÔò²Ù×÷Ê§°Ü
+//è‹¥posæœ‰æ•°æ®å…ƒç´ ï¼Œä¸”ä¸æ˜¯æœ€åä¸€ä¸ªï¼Œåˆ™è¿”å›å®ƒçš„åç»§ï¼Œå¦åˆ™æ“ä½œå¤±è´¥
 
 void UnionList(struct SeqList *LA, struct SeqList LB);
-//½«ËùÓĞÔÚÏßĞÔ±íLBÖĞµ«²»ÔÚLAÖĞµÄÊı¾İÔªËØ²åÈëµ½LAÖĞ
+//å°†æ‰€æœ‰åœ¨çº¿æ€§è¡¨LBä¸­ä½†ä¸åœ¨LAä¸­çš„æ•°æ®å…ƒç´ æ’å…¥åˆ°LAä¸­
