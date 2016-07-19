@@ -10,50 +10,50 @@ struct node
 
 typedef node* LinkList;
 
-/*��ʼ�������������������ı�ͷָ����Ϊ��*/
+/*初始化链表，即将单链表的表头指针设为空*/
 void initList(LinkList *L);
 
-/*��������е�����Ԫ�أ��ͷ����н�㣬ʹ֮��Ϊһ���ձ�*/
+/*清除链表中的所有元素，释放所有结点，使之成为一个空表*/
 void clearList(LinkList *L);
 
-/*���ص������ĳ���*/
+/*返回单链表的长度*/
 int sizeList(LinkList *L);
 
-/*��鵥�����Ƿ�Ϊ�գ����򷵻�1�����򷵻�0*/
+/*检查单链表是否为空，空则返回1，否则返回0*/
 int emptyList(LinkList *L);
 
-/*���������е�pos������Ԫ��*/
-ElemType getElem(LinkList L, int pos);
+/*返回链表中第pos个结点的元素*/
+ElemType getElem(LinkList L, int pos); 
 
-/*����һ��������*/
+/*遍历一个单链表*/
 void traverseList(LinkList *L);
 
-/*�ӵ������в���ֵΪe�ĵ�һ��Ԫ�أ����ҵ��򷵻ص�ַ*/
+/*从单链表中查找值为e的第一个元素，查找到则返回地址*/
 ElemType* findList(LinkList *L, ElemType e);
 
-/*�ѵ�������posλ�õ�ֵ�޸�Ϊe���ɹ�����1�����򷵻�0*/
+/*把单链表中pos位置的值修改为e，成功返回1，否则返回0*/
 int updateList(LinkList *L, int pos, ElemType e);
 
-/*��������ͷ����һ��Ԫ��*/
+/*向单链表表头插入一个元素*/
 void insertFirstList(LinkList *L, ElemType e);
 
-/*��������ĩβ����һ��Ԫ��*/
+/*向单链表的末尾添加一个元素*/
 void insertLastList(LinkList *L, ElemType e);
 
-/*�������е�pos�����λ�ò���Ԫ��Ϊx�Ľڵ㣬������ɹ�����1�����򷵻�0*/
+/*向单链表中第pos个结点位置插入元素为x的节点，若插入成功返回1，否则返回0*/
 int insertPosList(LinkList *L, int pos, ElemType e);
 
-/*�����������в���Ԫ��e��㣬ʹ�ò������Ȼ����*/
+/*向有序链表中插入元素e结点，使得插入后仍然有序*/
 void insertOrderList(LinkList *L, ElemType e);
 
-/*�ӵ�������ɾ����ͷ��㣬���Ѹý���ֵ���أ���ɾ��ʧ��ֹͣ����*/
+/*从单链表中删除表头结点，并把该结点的值返回，若删除失败停止运行*/
 ElemType deleteFirstList(LinkList *L);
 
-/*�ӵ�������ɾ����β��㲢��������ֵ��ɾ��ʧ�����˳�*/
+/*从单链表中删除表尾结点并返回它的值，删除失败则退出*/
 ElemType deleteLastList(LinkList *L);
 
-/*�ӵ�����ɾ����pos����㲢��������ֵ��ɾ��ʧ���˳�*/
+/*从单链表删除第pos个结点并返回它的值，删除失败退出*/
 ElemType deletePosList(LinkList *L, int pos);
 
-/*�ӵ�������ɾ��ֵΪe�ĵ�һ���ڵ㣬�ɹ�����1��ʧ�ܷ���-1*/
+/*从单链表中删除值为e的第一个节点，成功返回1，失败返回-1*/
 int deleteValueList(LinkList *L, ElemType e);
