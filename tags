@@ -1,0 +1,82 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ClearList	list/Source.cpp	/^Status ClearList(struct SeqList *L){$/;"	f
+DestroyList	list/Source.cpp	/^Status DestroyList(struct SeqList *L){$/;"	f
+ERROR	link_list/common.h	4;"	d
+ERROR	list/common.h	4;"	d
+ElemType	link_list/link_list.h	/^typedef int ElemType;$/;"	t
+ElemType	list/list.h	/^typedef int ElemType;$/;"	t
+FALSE	link_list/common.h	2;"	d
+FALSE	list/common.h	2;"	d
+FindList	list/Source.cpp	/^int FindList(struct SeqList *L, ElemType e){$/;"	f
+GetElem	list/Source.cpp	/^ElemType GetElem(struct SeqList *L, int pos){$/;"	f
+INFEASIBLE	link_list/common.h	5;"	d
+INFEASIBLE	list/common.h	5;"	d
+InitList	list/Source.cpp	/^Status InitList(struct SeqList *L, int maxSize){$/;"	f
+InsertElem	list/Source.cpp	/^Status InsertElem(struct SeqList *L, ElemType e){$/;"	f
+InsertFirstList	list/Source.cpp	/^void InsertFirstList(struct SeqList *L, ElemType e){$/;"	f
+InsertLastList	list/Source.cpp	/^void InsertLastList(struct SeqList *L, ElemType e){$/;"	f
+LinkList	link_list/link_list.h	/^typedef node* LinkList;$/;"	t
+ListEmpty	list/Source.cpp	/^Status ListEmpty(struct SeqList *L){$/;"	f
+ListLength	list/Source.cpp	/^int ListLength(struct SeqList *L){$/;"	f
+ListTraverse	list/Source.cpp	/^Status ListTraverse(struct SeqList *L, Status visit(ElemType e)){$/;"	f
+LocateElem	list/Source.cpp	/^int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e1, ElemType e2)){$/;"	f
+MoveList	list/Source.cpp	/^void MoveList(struct SeqList *L, int pos){$/;"	f
+NextElem	list/Source.cpp	/^ElemType NextElem(struct SeqList *L, int pos){$/;"	f
+OK	link_list/common.h	3;"	d
+OK	list/common.h	3;"	d
+OVERLOW	link_list/common.h	6;"	d
+OVERLOW	list/common.h	6;"	d
+PriorElem	list/Source.cpp	/^ElemType PriorElem(struct SeqList *L, int pos){$/;"	f
+PutElem	list/Source.cpp	/^Status PutElem(struct SeqList *L, int pos, ElemType e){$/;"	f
+SeqList	list/list.h	/^struct SeqList$/;"	s
+Status	link_list/common.h	/^typedef int Status;$/;"	t
+Status	list/common.h	/^typedef int Status;$/;"	t
+TRUE	link_list/common.h	1;"	d
+TRUE	list/common.h	1;"	d
+UnionList	list/Source.cpp	/^void UnionList(struct SeqList *LA, struct SeqList *LB){$/;"	f
+UpdatePosElem	list/Source.cpp	/^Status UpdatePosElem(struct SeqList *L, int pos, ElemType e){$/;"	f
+age	link_list/Source.cpp	/^	int age;$/;"	m	struct:person	file:
+clearList	link_list/Source.cpp	/^void clearList(LinkList *L){$/;"	f
+data	link_list/link_list.h	/^	ElemType data;$/;"	m	struct:node
+deleteElem	list/Source.cpp	/^ElemType deleteElem(struct SeqList *L, int pos){$/;"	f
+deleteFirstList	link_list/Source.cpp	/^ElemType deleteFirstList(LinkList *L){$/;"	f
+deleteFirstList	list/Source.cpp	/^ElemType deleteFirstList(struct SeqList *L){$/;"	f
+deleteLastList	link_list/Source.cpp	/^ElemType deleteLastList(LinkList *L){$/;"	f
+deleteLastList	list/Source.cpp	/^ElemType deleteLastList(struct SeqList *L){$/;"	f
+deletePosList	link_list/Source.cpp	/^ElemType deletePosList(LinkList *L, int pos){$/;"	f
+deletePosList	list/Source.cpp	/^ElemType deletePosList(struct SeqList *L, int pos){$/;"	f
+deleteValueList	link_list/Source.cpp	/^int deleteValueList(LinkList *L, ElemType e){$/;"	f
+emptyList	link_list/Source.cpp	/^int emptyList(LinkList *L){$/;"	f
+equal	list/Source.cpp	/^Status equal(ElemType e1, ElemType e2){$/;"	f
+findList	link_list/Source.cpp	/^ElemType* findList(LinkList *L, ElemType e){$/;"	f
+getElem	link_list/Source.cpp	/^ElemType getElem(LinkList L, int pos){$/;"	f
+initList	link_list/Source.cpp	/^void initList(LinkList *L){$/;"	f
+insertFirstList	link_list/Source.cpp	/^void insertFirstList(LinkList *L, ElemType e){$/;"	f
+insertLastList	link_list/Source.cpp	/^void insertLastList(LinkList *L, ElemType e){$/;"	f
+insertOrderList	link_list/Source.cpp	/^void insertOrderList(LinkList *L, ElemType e){$/;"	f
+insertPosList	link_list/Source.cpp	/^int insertPosList(LinkList *L, int pos, ElemType e){$/;"	f
+is_used	list/list.h	/^	int is_used; \/\/1表示正在使用，0表示空闲$/;"	m	struct:node
+lessthan	list/Source.cpp	/^Status lessthan(ElemType e1, ElemType e2){$/;"	f
+list	list/list.h	/^	node *list;$/;"	m	struct:SeqList
+main	link_list/Source.cpp	/^int main(){$/;"	f
+main	list/Source.cpp	/^int main(){$/;"	f
+maxSize	list/list.h	/^	int maxSize; \/\/记录最大可容纳的长度$/;"	m	struct:SeqList
+name	link_list/Source.cpp	/^	char name[10];$/;"	m	struct:person	file:
+next	link_list/link_list.h	/^	struct node * next;$/;"	m	struct:node	typeref:struct:node::node
+node	link_list/link_list.h	/^struct node$/;"	s
+node	list/list.h	/^struct node{$/;"	s
+person	link_list/Source.cpp	/^struct person{$/;"	s	file:
+reMalloc	list/Source.cpp	/^void reMalloc(struct SeqList *L, int newSize){$/;"	f
+size	list/list.h	/^	int size;  \/\/记录当前长度$/;"	m	struct:SeqList
+sizeList	link_list/Source.cpp	/^int sizeList(LinkList *L){$/;"	f
+test	link_list/Source.cpp	/^void test(node** L){$/;"	f
+traverseList	link_list/Source.cpp	/^void traverseList(LinkList *L){$/;"	f
+traverseList	list/Source.cpp	/^void traverseList(struct SeqList *L){$/;"	f
+updateList	link_list/Source.cpp	/^int updateList(LinkList *L, int pos, ElemType e){$/;"	f
+value	list/list.h	/^	ElemType value; \/\/元素的值$/;"	m	struct:node
+visit	list/Source.cpp	/^Status visit(ElemType e){$/;"	f
