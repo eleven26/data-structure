@@ -4,14 +4,14 @@
 #include "list.h"
 
 void reMalloc(struct SeqList *L, int newSize){
-	//ÖØĞÂ·ÖÅäÏßĞÔ±íÄÚ´æ£¬´óĞ¡ÎªnewSize
-	node *new_List =(node *) calloc(L->maxSize , sizeof(node));  //·ÖÅäÁÙÊ±ÄÚ´æ¿é
-	memcpy(new_List, L->list, L->maxSize * sizeof(node));  //ÕâÀïµÄ³¤¶ÈÓ¦¸ÃÊÇL->maxSize * sizeof(node)£¬¶ø²»ÊÇL->maxSize
+	//é‡æ–°åˆ†é…çº¿æ€§è¡¨å†…å­˜ï¼Œå¤§å°ä¸ºnewSize
+	node *new_List =(node *) calloc(L->maxSize , sizeof(node));  //åˆ†é…ä¸´æ—¶å†…å­˜å—
+	memcpy(new_List, L->list, L->maxSize * sizeof(node));  //è¿™é‡Œçš„é•¿åº¦åº”è¯¥æ˜¯L->maxSize * sizeof(node)ï¼Œè€Œä¸æ˜¯L->maxSize
 	free(L->list);
 	L->list = NULL;
 
 	int tmp_size = L->maxSize;
-	L->list = (node *) calloc(newSize , sizeof(node)); //ÉêÇëĞÂµÄÄÚ´æ
+	L->list = (node *) calloc(newSize , sizeof(node)); //ç”³è¯·æ–°çš„å†…å­˜
 	memcpy(L->list, new_List, L->maxSize * sizeof(node));
 	L->maxSize = newSize;
 	free(new_List);
@@ -19,20 +19,20 @@ void reMalloc(struct SeqList *L, int newSize){
 
 	for (int i = tmp_size; i < L->maxSize; i++)
 	{
-		L->list[i].is_used = 0; //Ã¿¸öÔªËØ¶¼±êÖ¾ÎªÎ´Ê¹ÓÃ
+		L->list[i].is_used = 0; //æ¯ä¸ªå…ƒç´ éƒ½æ ‡å¿—ä¸ºæœªä½¿ç”¨
 	}
 }//reMalloc
 
 Status InitList(struct SeqList *L, int maxSize){
-	//¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔ±í
+	//æ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§è¡¨
 	if (maxSize < 0){
-		printf("maxSize´íÎó!");
+		printf("maxSizeé”™è¯¯!");
 		exit(1);
 	}
 	L->list = (node*) calloc(maxSize, sizeof(node));
 	for (int i = 0; i < maxSize; i++)
 	{
-		L->list[i].is_used = 0; //Ã¿¸öÔªËØ¶¼±êÖ¾ÎªÎ´Ê¹ÓÃ
+		L->list[i].is_used = 0; //æ¯ä¸ªå…ƒç´ éƒ½æ ‡å¿—ä¸ºæœªä½¿ç”¨
 	}
 	L->size = 0;
 	L->maxSize = maxSize;
@@ -40,7 +40,7 @@ Status InitList(struct SeqList *L, int maxSize){
 }//InitList
 
 Status DestroyList(struct SeqList *L){
-	//Ïú»ÙÁĞ±í
+	//é”€æ¯åˆ—è¡¨
 	free(L->list);
 	L->size = 0;
 	L->maxSize = 0;
@@ -49,7 +49,7 @@ Status DestroyList(struct SeqList *L){
 }//DestroyList
 
 Status ClearList(struct SeqList *L){
-	//½«LÖØÖÃÎª¿Õ±í£¬Çå³ıLÖĞµÄËùÓĞÔªËØ£¬ÊÍ·Å´æ´¢¿Õ±í
+	//å°†Lé‡ç½®ä¸ºç©ºè¡¨ï¼Œæ¸…é™¤Lä¸­çš„æ‰€æœ‰å…ƒç´ ï¼Œé‡Šæ”¾å­˜å‚¨ç©ºè¡¨
 	L->maxSize = 0;
 	L->size = 0;
 	if (L->list != NULL){
@@ -61,56 +61,56 @@ Status ClearList(struct SeqList *L){
 }//ClearList
 
 Status ListEmpty(struct SeqList *L){
-	//ÈôLÎª¿Õ±í£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+	//è‹¥Lä¸ºç©ºè¡¨ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
 	return L->size == 0 ? TRUE : FALSE;
 }//ListEmpty
 
 int ListLength(struct SeqList *L){
-	//·µ»Øµ±Ç°ÏßĞÔ±íµÄ³¤¶È
+	//è¿”å›å½“å‰çº¿æ€§è¡¨çš„é•¿åº¦
 	return L->maxSize;
 }//ListLength
 
 ElemType GetElem(struct SeqList *L, int pos){
-	//·µ»ØÏßĞÔ±íÖĞÎ»ÖÃposµÄÔªËØ
+	//è¿”å›çº¿æ€§è¡¨ä¸­ä½ç½®posçš„å…ƒç´ 
 	if (pos<1 || pos>L->maxSize){
-		printf("ÔªËØĞòºÅÔ½½ç");
+		printf("å…ƒç´ åºå·è¶Šç•Œ");
 		return OVERLOW;
 	}
 	if (L->list[pos - 1].is_used == 0){
-		printf("¸ÃÎ»ÖÃÃ»ÓĞÔªËØ£¡");
+		printf("è¯¥ä½ç½®æ²¡æœ‰å…ƒç´ ï¼");
 		return ERROR;
 	}
 	return L->list[pos - 1].value;
 }//GetElem
 
 void MoveList(struct SeqList *L, int pos){
-	//½«ÏßĞÔ±íL´ÓposÎ»ÖÃ¿ªÊ¼ÏòºóÒÆ
+	//å°†çº¿æ€§è¡¨Lä»posä½ç½®å¼€å§‹å‘åç§»
 	for (int i = L->maxSize - 1; i > pos; i--)
-	{	/*i>pos¶ø²»ÊÇi>=pos£¬ÓÉÓÚL->list[pos].is_used = 1
-		//µ±i=pos+1Ê±£¬»á°Ñlist[pos]ÏòºóÒÆ¶¯Ò»Î»£¬ÕâÑùlist[pos]¾Í¿ÉÒÔÈİÄÉĞÂÔªËØÁË
-		//¶øÈç¹ûÈ¡i=posµÄ»°£¬»áÊ¹µÃL->list[pos].is_used±ä³É1£¬¾Í²»ÄÜ²åÈëĞÂÔªËØÁË
+	{	/*i>posè€Œä¸æ˜¯i>=posï¼Œç”±äºL->list[pos].is_used = 1
+		//å½“i=pos+1æ—¶ï¼Œä¼šæŠŠlist[pos]å‘åç§»åŠ¨ä¸€ä½ï¼Œè¿™æ ·list[pos]å°±å¯ä»¥å®¹çº³æ–°å…ƒç´ äº†
+		//è€Œå¦‚æœå–i=posçš„è¯ï¼Œä¼šä½¿å¾—L->list[pos].is_usedå˜æˆ1ï¼Œå°±ä¸èƒ½æ’å…¥æ–°å…ƒç´ äº†
 		*/
-		//×î´óÏÂ±êÊÇL->maxSize - 1
-		//Ã¿¸öÔªËØºóÒÆ£¬´Ó×îºóÒ»¸öÔªËØ¿ªÊ¼ÒÆ¶¯£¬½«Ã¿¸ö¿ÉÒÔÒÆ¶¯µÄÔªËØ¶¼ÒÆ¶¯
+		//æœ€å¤§ä¸‹æ ‡æ˜¯L->maxSize - 1
+		//æ¯ä¸ªå…ƒç´ åç§»ï¼Œä»æœ€åä¸€ä¸ªå…ƒç´ å¼€å§‹ç§»åŠ¨ï¼Œå°†æ¯ä¸ªå¯ä»¥ç§»åŠ¨çš„å…ƒç´ éƒ½ç§»åŠ¨
 		if (L->list[i].is_used == 0 && L->list[i - 1].is_used == 1){
-			//Èç¹ûÕıÔÚÊ¹ÓÃµÄ»°»á±»¸²¸Ç
+			//å¦‚æœæ­£åœ¨ä½¿ç”¨çš„è¯ä¼šè¢«è¦†ç›–
 			L->list[i].value = L->list[i - 1].value;
 			L->list[i].is_used = L->list[i - 1].is_used;
-			L->list[i - 1].is_used = 0; //i-1Î»ÖÃµÄÔªËØÒÑ¾­ÒÆ¶¯µ½iÎ»ÖÃ
+			L->list[i - 1].is_used = 0; //i-1ä½ç½®çš„å…ƒç´ å·²ç»ç§»åŠ¨åˆ°iä½ç½®
 			L->list[i - 1].value = 0;
 		}
 	}
 }//MoveList
 
 Status PutElem(struct SeqList *L, int pos, ElemType e){
-	//ÔÚÎ»ÖÃpos²åÈëÔªËØe£¬Î»ÖÃposÖ®ºó¶¼ÒªºóÒÆ£¬1<= pos <= L-maxSize
+	//åœ¨ä½ç½®posæ’å…¥å…ƒç´ eï¼Œä½ç½®posä¹‹åéƒ½è¦åç§»ï¼Œ1<= pos <= L-maxSize
 	pos = pos - 1;
 	if (pos<0 || pos>L->maxSize - 1){
-		printf("·Ç·¨Î»ÖÃ²ÎÊı\n");
+		printf("éæ³•ä½ç½®å‚æ•°\n");
 		return OVERLOW;
 	}
 	if (L->size == L->maxSize){
-		printf("ÏßĞÔ±íÒÑ¾­²»ÄÜÈİÄÉ¸ü¶àÔªËØ");
+		printf("çº¿æ€§è¡¨å·²ç»ä¸èƒ½å®¹çº³æ›´å¤šå…ƒç´ ");
 		return OVERLOW;
 	}else{
 		if (L->list[pos].is_used == 0){
@@ -126,7 +126,7 @@ Status PutElem(struct SeqList *L, int pos, ElemType e){
 				L->size = L->size + 1;
 			}
 			else{
-				printf("ÏßĞÔ±í¸ÃÎ»ÖÃ%dÎŞ·¨²åÈë\n", pos);
+				printf("çº¿æ€§è¡¨è¯¥ä½ç½®%dæ— æ³•æ’å…¥\n", pos);
 				return OVERLOW;
 			}
 		}
@@ -135,14 +135,14 @@ Status PutElem(struct SeqList *L, int pos, ElemType e){
 }//PutElem
 
 Status UpdatePosElem(struct SeqList *L, int pos, ElemType e){
-	//Ö±½ÓÌæ»»ÏßĞÔ±íÎ»ÖÃposµÄÔªËØ£¬¶ø²»¸Ä±äÆäËûÔªËØµÄÎ»ÖÃ
+	//ç›´æ¥æ›¿æ¢çº¿æ€§è¡¨ä½ç½®posçš„å…ƒç´ ï¼Œè€Œä¸æ”¹å˜å…¶ä»–å…ƒç´ çš„ä½ç½®
 	L->list[pos - 1].value = e;
 	L->list[pos - 1].is_used = 1;
 	return OK;
 }//UpdatePosElem
 
 void InsertFirstList(struct SeqList *L, ElemType e){
-	//ÏòÏßĞÔ±íLµÄ±íÍ·²åÈëÔªËØe
+	//å‘çº¿æ€§è¡¨Lçš„è¡¨å¤´æ’å…¥å…ƒç´ e
 	if (L->list[L->maxSize - 1].is_used == 1){
 		reMalloc(L, L->maxSize + 1);
 	}
@@ -153,7 +153,7 @@ void InsertFirstList(struct SeqList *L, ElemType e){
 }//InsertFirstList
 
 void InsertLastList(struct SeqList *L, ElemType e){
-	//ÏòÏßĞÔ±íLµÄ±íÎ²²åÈëÔªËØe
+	//å‘çº¿æ€§è¡¨Lçš„è¡¨å°¾æ’å…¥å…ƒç´ e
 	if (L->list[L->maxSize - 1].is_used == 1){
 		reMalloc(L, L->maxSize + 1);
 	}
@@ -163,9 +163,9 @@ void InsertLastList(struct SeqList *L, ElemType e){
 }//InsertLastList
 
 ElemType deleteElem(struct SeqList *L, int pos){
-	//É¾³ıÎ»ÖÃposµÄÔªËØ
+	//åˆ é™¤ä½ç½®posçš„å…ƒç´ 
 	if (L->size == 0){
-		printf("ÏßĞÔ±íÎª¿Õ!\n");
+		printf("çº¿æ€§è¡¨ä¸ºç©º!\n");
 		return ERROR;
 	}
 	if (L->list[pos].is_used == 1){
@@ -177,25 +177,25 @@ ElemType deleteElem(struct SeqList *L, int pos){
 	}
 	else
 	{
-		printf("¸ÃÎ»ÖÃÃ»ÓĞÔªËØ\n");
+		printf("è¯¥ä½ç½®æ²¡æœ‰å…ƒç´ \n");
 		return ERROR;
 	}
 	
 }//deleteElem
 
 ElemType deleteFirstList(struct SeqList *L){
-	//´ÓÏßĞÔ±íLÖĞÉ¾³ı±íÍ·ÔªËØ²¢·µ»ØËü£¬ÈôÉ¾³ıÊ§°Ü·µ»Ø´íÎó´úÂë
+	//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤è¡¨å¤´å…ƒç´ å¹¶è¿”å›å®ƒï¼Œè‹¥åˆ é™¤å¤±è´¥è¿”å›é”™è¯¯ä»£ç 
 	return deleteElem(L, 0);
 }//deleteFirstList
 
 ElemType deleteLastList(struct SeqList *L){
-	//´ÓÏßĞÔ±íLÖĞÉ¾³ı±íÎ²ÔªËØ²¢·µ»ØËü£¬ÈôÉ¾³ıÊ§°Ü·µ»Ø´íÎó´úÂë
+	//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤è¡¨å°¾å…ƒç´ å¹¶è¿”å›å®ƒï¼Œè‹¥åˆ é™¤å¤±è´¥è¿”å›é”™è¯¯ä»£ç 
 	int pos = L->maxSize - 1;
 	return deleteElem(L, pos);
 }//deleteLastList
 
 ElemType deletePosList(struct SeqList *L, int pos){
-	//´ÓÏßĞÔ±íLÖĞÉ¾³ıÎ»ÖÃposµÄÔªËØ
+	//ä»çº¿æ€§è¡¨Lä¸­åˆ é™¤ä½ç½®posçš„å…ƒç´ 
 	pos = pos - 1;
 	return deleteElem(L, pos);
 }//deletePosList
@@ -205,7 +205,7 @@ Status visit(ElemType e){
 }
 
 void traverseList(struct SeqList *L){
-	//ÆÕÍ¨±éÀú£¬´òÓ¡ÏßĞÔ±í´æ´¢ÓĞÖµµÄÔªËØ
+	//æ™®é€šéå†ï¼Œæ‰“å°çº¿æ€§è¡¨å­˜å‚¨æœ‰å€¼çš„å…ƒç´ 
 	for (int i = 0; i < L->maxSize; i++){
 		if (L->list[i].is_used == 1){
 			printf("L[%d]=%d, ", i, L->list[i].value);
@@ -217,7 +217,7 @@ void traverseList(struct SeqList *L){
 }//traverseList
 
 Status ListTraverse(struct SeqList *L, Status visit(ElemType e)){
-	//ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvisit£¬Ò»µ©visit()Ê§°Ü£¬Ôò²Ù×÷Ê§°Ü¡£
+	//ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°visitï¼Œä¸€æ—¦visit()å¤±è´¥ï¼Œåˆ™æ“ä½œå¤±è´¥ã€‚
 	for (int i = 0; i < L->maxSize; i++){
 		if (L->list[i].is_used == 1 && visit(L->list[i].value)){
 			return FALSE;
@@ -227,8 +227,8 @@ Status ListTraverse(struct SeqList *L, Status visit(ElemType e)){
 }//ListTraverse
 
 int FindList(struct SeqList *L, ElemType e){
-	//´ÓÏßĞÔ±íÖĞ²éÕÒÖµÓëeÏàµÈµÄÔªËØ£¬Èô²éÕÒ³É¹¦·µ»ØÆäÎ»ÖÃ£¬·ñÔò·µ»Ø-1
-	//Èç¹ûÓĞÖØ¸´ÔªËØÖ»ÊÇ·µ»ØµÚÒ»¸ö³öÏÖµÄÎ»ÖÃ
+	//ä»çº¿æ€§è¡¨ä¸­æŸ¥æ‰¾å€¼ä¸eç›¸ç­‰çš„å…ƒç´ ï¼Œè‹¥æŸ¥æ‰¾æˆåŠŸè¿”å›å…¶ä½ç½®ï¼Œå¦åˆ™è¿”å›-1
+	//å¦‚æœæœ‰é‡å¤å…ƒç´ åªæ˜¯è¿”å›ç¬¬ä¸€ä¸ªå‡ºç°çš„ä½ç½®
 	for (int i = 0; i < L->maxSize; i++)
 	{
 		if (L->list[i].is_used == 1 && L->list[i].value == e){
@@ -243,7 +243,7 @@ Status lessthan(ElemType e1, ElemType e2){
 }
 
 Status InsertElem(struct SeqList *L, ElemType e){
-	//±éÀúÏßĞÔ±í£¬Èç¹ûÓĞ¿ÕÏĞÎ»ÖÃÔò²åÈë£¬Ã»ÓĞÔòÖØĞÂ·ÖÅäÄÚ´æÔÙ²åÈë
+	//éå†çº¿æ€§è¡¨ï¼Œå¦‚æœæœ‰ç©ºé—²ä½ç½®åˆ™æ’å…¥ï¼Œæ²¡æœ‰åˆ™é‡æ–°åˆ†é…å†…å­˜å†æ’å…¥
 	if (L->size == L->maxSize){
 		reMalloc(L, L->maxSize + 1);
 		L->list[L->maxSize - 1].is_used = 1;
@@ -265,14 +265,14 @@ Status InsertElem(struct SeqList *L, ElemType e){
 }//InsertElem
 
 ElemType PriorElem(struct SeqList *L, int pos){
-	//ÈôposÓĞÊı¾İÔªËØ£¬ÇÒ²»ÊÇµÚÒ»¸ö£¬Ôò·µ»ØËüµÄÇ°Çı£¬·ñÔò²Ù×÷Ê§°Ü
+	//è‹¥posæœ‰æ•°æ®å…ƒç´ ï¼Œä¸”ä¸æ˜¯ç¬¬ä¸€ä¸ªï¼Œåˆ™è¿”å›å®ƒçš„å‰é©±ï¼Œå¦åˆ™æ“ä½œå¤±è´¥
 	if (L->size>1 && pos != 0){
 		if (L->list[pos - 1].is_used == 1){
 			return L->list[pos - 1].value;
 		}
 		else
 		{
-			printf("¸ÃÔªËØÇ°ÇıÔªËØÎª¿Õ!\n");
+			printf("è¯¥å…ƒç´ å‰é©±å…ƒç´ ä¸ºç©º!\n");
 			return 0;
 		}
 	}
@@ -280,14 +280,14 @@ ElemType PriorElem(struct SeqList *L, int pos){
 }//PriorElem
 
 ElemType NextElem(struct SeqList *L, int pos){
-	//ÈôposÓĞÊı¾İÔªËØ£¬ÇÒ²»ÊÇ×îºóÒ»¸ö£¬Ôò·µ»ØËüµÄºó¼Ì£¬·ñÔò²Ù×÷Ê§°Ü
+	//è‹¥posæœ‰æ•°æ®å…ƒç´ ï¼Œä¸”ä¸æ˜¯æœ€åä¸€ä¸ªï¼Œåˆ™è¿”å›å®ƒçš„åç»§ï¼Œå¦åˆ™æ“ä½œå¤±è´¥
 	if (L->size>1 && pos < L->maxSize-1){
 		if (L->list[pos + 1].is_used == 1){
 			return L->list[pos + 1].value;
 		}
 		else
 		{
-			printf("¸ÃÔªËØºó¼ÌÔªËØÎª¿Õ!\n");
+			printf("è¯¥å…ƒç´ åç»§å…ƒç´ ä¸ºç©º!\n");
 			return 0;
 		}
 	}
@@ -299,8 +299,8 @@ Status equal(ElemType e1, ElemType e2){
 }
 
 int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e1, ElemType e2)){
-	//·µ»ØLÖĞµÚÒ»¸öÓëeÂú×ã¹ØÏµcompare()µÄÊı¾İÔªËØµÄÎ»ÖÃ
-	//ÈôÕâÑùµÄÔªËØ²»´æÔÚ£¬Ôò·µ»Ø-1
+	//è¿”å›Lä¸­ç¬¬ä¸€ä¸ªä¸eæ»¡è¶³å…³ç³»compare()çš„æ•°æ®å…ƒç´ çš„ä½ç½®
+	//è‹¥è¿™æ ·çš„å…ƒç´ ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›-1
 	for (int i = 0; i < L->maxSize; i++){
 		if (L->list[i].is_used == 1 && compare(e, L->list[i].value)){
 			return i;
@@ -310,14 +310,14 @@ int LocateElem(struct SeqList *L, ElemType e, Status compare(ElemType e1, ElemTy
 }//LocateElem
 
 void UnionList(struct SeqList *LA, struct SeqList *LB){
-	//½«ËùÓĞÔÚÏßĞÔ±íLBÖĞµ«²»ÔÚLAÖĞµÄÊı¾İÔªËØ²åÈëµ½LAÖĞ
+	//å°†æ‰€æœ‰åœ¨çº¿æ€§è¡¨LBä¸­ä½†ä¸åœ¨LAä¸­çš„æ•°æ®å…ƒç´ æ’å…¥åˆ°LAä¸­
 	int LA_len = ListLength(LA), LB_len = ListLength(LB);
 	ElemType e;
 	for (int i = 1; i <= LB_len; i++){
 		if (LB->list[i-1].is_used == 1){
-			e = GetElem(LB, i); //È¡LBÖĞµÚi¸öÊı¾İÔªËØ¸³¸øe
+			e = GetElem(LB, i); //å–LBä¸­ç¬¬iä¸ªæ•°æ®å…ƒç´ èµ‹ç»™e
 			if (LocateElem(LA, e, equal) == -1){
-				//LAÖĞ²»´æÔÚºÍeÏàÍ¬µÄÊı¾İÔªËØÔò²åÈëÖ®
+				//LAä¸­ä¸å­˜åœ¨å’Œeç›¸åŒçš„æ•°æ®å…ƒç´ åˆ™æ’å…¥ä¹‹
 				InsertElem(LA, e);
 			}
 		}
@@ -343,7 +343,7 @@ int main(){
 	InsertFirstList(&L, 21);
 	InsertLastList(&L, 22);
 	traverseList(&L);
-	printf("is used?=================== %d\n", J->list[11].is_used); //InsertFirstListÖ®ºó£¬Ô­À´ÔÚ10µÄÏÖÔÚÔÚ11ÁË£¬J->list[10].is_used=0ÁË
+	printf("is used?=================== %d\n", J->list[11].is_used); //InsertFirstListä¹‹åï¼ŒåŸæ¥åœ¨10çš„ç°åœ¨åœ¨11äº†ï¼ŒJ->list[10].is_used=0äº†
 	deleteElem(&L, 10);
 	traverseList(&L);
 
@@ -354,23 +354,23 @@ int main(){
 	printf("insert test list[%d]=: %d\n", 10, J->list[10].value);
 	printf("is used? %d\n", J->list[10].is_used);
 
-	printf("10µÄÎ»ÖÃ:%d\n", FindList(&L, 10));
+	printf("10çš„ä½ç½®:%d\n", FindList(&L, 10));
 
 	traverseList(&L);
 	
 	printf("new size:%d\n",J->maxSize);
 	//traverseList(&L);
 	printf("maxSize:%d\n", J->size);
-	printf("±éÀú½á¹û:%d\n", ListTraverse(&L,visit));
+	printf("éå†ç»“æœ:%d\n", ListTraverse(&L,visit));
 
-	printf("´óÓÚ21µÄµÚÒ»¸öÔªËØÎ»ÖÃ %d\n", LocateElem(&L, 21, lessthan));
+	printf("å¤§äº21çš„ç¬¬ä¸€ä¸ªå…ƒç´ ä½ç½® %d\n", LocateElem(&L, 21, lessthan));
 
-	printf("Î»ÖÃ11µÄÇ°ÇıÔªËØÎª:%d\n", PriorElem(&L, 1));
+	printf("ä½ç½®11çš„å‰é©±å…ƒç´ ä¸º:%d\n", PriorElem(&L, 1));
 
 	printf("sizeof(L)=%d\n", sizeof(L)); 
-	//LÊ¼ÖÕµÈÓÚ4µÄÔ­ÒòÊÇ£¬µ±L×÷Îª²ÎÊı´«µİµÄÊ±ºò£¬"ÍË»¯"ÎªÖ¸Õë£¬sizeofÖ»ÄÜµÃµ½Ö¸Õë¶ÔÓ¦ÀàĞÍµÄ³¤¶È.
+	//Lå§‹ç»ˆç­‰äº4çš„åŸå› æ˜¯ï¼Œå½“Lä½œä¸ºå‚æ•°ä¼ é€’çš„æ—¶å€™ï¼Œ"é€€åŒ–"ä¸ºæŒ‡é’ˆï¼Œsizeofåªèƒ½å¾—åˆ°æŒ‡é’ˆå¯¹åº”ç±»å‹çš„é•¿åº¦.
 	
-	printf("\nunion²âÊÔ\n");
+	printf("\nunionæµ‹è¯•\n");
 	struct SeqList LB;
 	InitList(&LB, 5);
 	InsertElem(&LB, 25);
@@ -379,7 +379,7 @@ int main(){
 	traverseList(&L);
 	traverseList(&LB);
 	
-	
+	 
 	getchar();
 	return 0;
 }
