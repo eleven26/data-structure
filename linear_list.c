@@ -1,63 +1,66 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define INIT_SIZE 100
+#define DEBUG 1
 typedef int elem_type;
-const elem_type initialize_value;
-typedef struct{
-	elem_type data;
-	struct node *next;
-}node;
 
-void println(char *string){
-	printf("%s\n", string);
+typedef struct list{
+    elem_type* elements;
+    int size;
+}list;
+
+/**
+ * initialize linear list
+ * @param L
+ */
+int init_list(list *L) {
+    L->size = INIT_SIZE;
+    size_t list_size = L->size * sizeof(elem_type);
+    //L->elements = (elem_type*)calloc((size_t)L->size, sizeof(elem_type));
+    //elem_type *new_list_address = (elem_type*)calloc((size_t)(L->size), sizeof(elem_type));
+    L->elements = (elem_type*)calloc((size_t)(L->size), sizeof(elem_type));
+    if (!L->elements){
+        printf("åˆå§‹åŒ–çº¿æ€§è¡¨å†…å­˜åˆ†é…å¤±è´¥!\n");
+        exit(1);
+    }
+    //memcpy(L->elements, new_list_address, list_size);
+    /*
+    L->elements = new_list_address;
+    if (memcmp(L->elements, new_list_address, list_size) != 0){
+        //å¦‚æœå†…å­˜å¤åˆ¶å¤±è´¥,è¡¨ç¤ºæœªèƒ½å®Œæˆåˆå§‹åŒ–
+        printf("åˆå§‹åŒ–çº¿æ€§è¡¨å¤±è´¥!\n");
+        exit(2);
+    }
+     */
+    if (DEBUG){
+        printf("åˆå§‹åŒ–çº¿æ€§è¡¨æˆåŠŸ!\n");
+    }
+    return 0;
 }
 
-//ÒÔINIT_SIZEÎª´óĞ¡³õÊ¼»¯ÏßĞÔ±í
-void init_list(node **L, int size){
-	node *begin_address = calloc(size, sizeof(node));
-	if (!begin_address){
-		println("ÏßĞÔ±í³õÊ¼»¯Ê§°Ü£¡");
-		exit(1);
-	}
-	*L = begin_address;
+/**
+ * destroy linear list
+ * @param l
+ */
+void destroy_list(list *L){
+    free(L->elements);
+    //freeä¹‹å, æŒ‡é’ˆè¿˜æ˜¯ä¼šæŒ‡å‘åŸæ¥çš„åœ°å€, å˜æˆäº†é‡æŒ‡é’ˆ, éœ€è¦p=NULL
+    L->elements = NULL;
+    if (L->elements != 0){
+        printf("é”€æ¯çº¿æ€§è¡¨å¤±è´¥!\n");
+        exit(3);
+    } else if (DEBUG) {
+        printf("é”€æ¯çº¿æ€§è¡¨æˆåŠŸ\n");
+    }
 }
 
-//´İ»ÙÏßĞÔ±í
-int destroy_list(node **L) {
-	if (*L)
-	{
-		free(*L);
-		return 0;
-	} else {
-		return -1; 
-	}
-}
-
-//Çå¿ÕÏßĞÔ±í£¬ºÍÏú»Ù²»Í¬£¬Çå¿ÕµÄÊ±ºò³¤¶È»¹ÊÇÔ­À´µÄ³¤¶È£¬Ö»ÊÇÔ­À´µÄÊı¾İÃ»ÁË
-int clear_list(node **list_address){
-	node *p = *list_address;
-	while (p){
-		p->data = initialize_value;
-		printf("initialize_value=%d\n", initialize_value);
-		p = p->next;
-	}
-	return 0;
-}
-
-//todo ÏßĞÔ±íÊ¹ÓÃmemcpy´úÌæÑ­»·Öğ¸ö¸³Öµ
-
-int main(){
-	node *L;
-	init_list(&L, INIT_SIZE);
-	L[10].data = 20;
-	clear_list(&L);
-	printf("L[10].data= %d\n", L[10].data);
-	if (destroy_list(&L) == 0){
-		println("Ïú»ÙÏßĞÔ±í³É¹¦");
-	}
-	else{
-		println("Ïú»ÙÏßĞÔ±íÊ§°Ü£¡");
-	}
-	return 0;
+int main(int argc, char **argv){
+    list L;
+    if (init_list(&L) != 0){
+        //åˆå§‹åŒ–å¤±è´¥
+        exit(3);
+    }
+    destroy_list(&L);
 }
