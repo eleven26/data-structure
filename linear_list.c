@@ -45,6 +45,8 @@ int clear_list(node **list_address){
 	return 0;
 }
 
+//todo 线性表使用memcpy代替循环逐个赋值
+
 int main(){
 	node *L;
 	init_list(&L, INIT_SIZE);
