@@ -60,6 +60,42 @@ void test_DestroyList()
     }
 }
 
+void test_ClearList()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    ListInsert(&linearList, 1, 15);
+
+    ClearList(&linearList);
+    if (linearList.length != 0) {
+        printf("test ClearList fail.\n");
+        exit(-1);
+    }
+
+    printf("test ClearList success.\n");
+}
+
+void test_ListEmpty()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    if (ListEmpty(&linearList) == FALSE) {
+        printf("test ClearList fail.\n");
+        exit(-1);
+    }
+
+    ListInsert(&linearList, 1, 10);
+    if (ListEmpty(&linearList) == TRUE) {
+        printf("test ClearList fail.\n");
+        exit(-1);
+    }
+
+    printf("test ListEmpty success.\n");
+}
+
 void test_ListInsert()
 {
     LinearList linearList;
@@ -112,4 +148,6 @@ int main()
     test_DestroyList();
     test_ListInsert();
     test_ListDelete();
+    test_ClearList();
+    test_ListEmpty();
 }

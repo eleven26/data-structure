@@ -26,6 +26,19 @@ Status DestroyList(LinearList *linearList)
     return SUCCESS;
 }
 
+//清空线性表
+Status ClearList(LinearList *linearList)
+{
+    if (!linearList) {
+        return FAIL;
+    }
+
+    linearList->length = 0;
+    linearList->elements = (ElementType*)0;
+
+    return SUCCESS;
+}
+
 //判断线性表是否为空
 Status ListEmpty(LinearList *linearList)
 {
