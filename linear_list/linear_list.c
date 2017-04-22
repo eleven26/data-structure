@@ -75,16 +75,16 @@ Status GetElement(LinearList *linearList, size_t position, ElementType *e)
 //定位满足compare的元素
 Status LocateElement(LinearList *linearList,
                           ElementType e,
-                          ElementType *result,
+                          size_t *result,
                           int compare(ElementType, ElementType))
 {
     if (!linearList) {
         return FAIL;
     }
     for (int i = 0; i < linearList->length; ++i) {
-        if (compare(e, linearList->elements[i]) == 0) {
-            //compare返回0的时候表示满足条件
-            *result = linearList->elements[i];
+        if (compare(e, linearList->elements[i])) {
+            //compare返回TRUE的时候表示满足条件
+            *result = i + 1;
             return SUCCESS;
         }
     }

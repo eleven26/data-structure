@@ -96,6 +96,133 @@ void test_ListEmpty()
     printf("test ListEmpty success.\n");
 }
 
+void test_ListLength()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    if (ListLength(&linearList) != 1) {
+        printf("test ListLength fail.\n");
+        exit(-1);
+    }
+
+    ListInsert(&linearList, 1, 15);
+    if (ListLength(&linearList) != 2) {
+        printf("test ListLength fail.\n");
+        exit(-1);
+    }
+
+    printf("test ListLength success.\n");
+}
+
+void test_GetElement()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    ListInsert(&linearList, 1, 15);
+
+    ElementType temp;
+    GetElement(&linearList, 2, &temp);
+    if (temp != 10) {
+        printf("test GetElement fail.\n");
+        exit(-1);
+    }
+
+    GetElement(&linearList, 1, &temp);
+    if (temp != 15) {
+        printf("test GetElement fail.\n");
+        exit(-1);
+    }
+
+    printf("test GetElement success.\n");
+}
+
+int locateElementCompare(ElementType element1, ElementType element2)
+{
+    if (element1 == element2) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+void test_LocateElement()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    ListInsert(&linearList, 1, 15);
+
+    size_t position;
+
+    LocateElement(&linearList, 10, &position, locateElementCompare);
+    if (position != 2) {
+        printf("test LocateElement fail.\n");
+        exit(-1);
+    }
+
+    LocateElement(&linearList, 15, &position, locateElementCompare);
+    if (position != 1) {
+        printf("test LocateElement fail.\n");
+        exit(-1);
+    }
+
+    printf("test LocateElement success.\n");
+}
+
+void TraverseList(LinearList *linearList)
+{
+    for (int i = 0; i < linearList->length; ++i) {
+        printf("%d ", linearList->elements[i]);
+        if (i == linearList->length - 1) {
+            printf("\n");
+        }
+    }
+}
+
+void test_PriorElement()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    printf("%d\n", linearList.elements[0]);
+    ListInsert(&linearList, 1, 15);
+    printf("%d, %d\n", linearList.elements[0], linearList.elements[1]);
+    ListInsert(&linearList, 1, 20); //[20, 15, 10]
+    printf("%d, %d, %d\n", linearList.elements[0], linearList.elements[1], linearList.elements[2]);
+    ListInsert(&linearList, 1, 32);
+    TraverseList(&linearList);
+    ListInsert(&linearList, 1, 45);
+    TraverseList(&linearList);
+
+    ElementType previous_element;
+    if (PriorElement(&linearList, 20, &previous_element) == SUCCESS) {
+        printf("test PriorElement fail.\n");
+        exit(1);
+    }
+
+    printf("%d, %d, %d\n", linearList.elements[0], linearList.elements[1], linearList.elements[2]);
+    PriorElement(&linearList, 10, &previous_element);
+    if (previous_element != 15) {
+        printf("%d\n", previous_element);
+        printf("test PriorElement fail.\n");
+        exit(2);
+    }
+
+    PriorElement(&linearList, 15, &previous_element);
+    if (previous_element != 20) {
+        printf("test PriorElement fail.\n");
+        exit(3);
+    }
+
+    printf("test PriorElement success.\n");
+}
+
 void test_ListInsert()
 {
     LinearList linearList;
@@ -150,4 +277,8 @@ int main()
     test_ListDelete();
     test_ClearList();
     test_ListEmpty();
+    test_ListLength();
+    test_GetElement();
+    test_LocateElement();
+    test_PriorElement();
 }

@@ -80,7 +80,7 @@ Status GetElement(LinearList *linearList, size_t position, ElementType* element)
  */
 Status LocateElement(LinearList *linearList,
                           ElementType element,
-                          ElementType *result,
+                          size_t *result,
                           int compare(ElementType, ElementType));
 
 /**
