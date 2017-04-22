@@ -190,15 +190,8 @@ void test_PriorElement()
     InitList(&linearList);
 
     ListInsert(&linearList, 1, 10);
-    printf("%d\n", linearList.elements[0]);
     ListInsert(&linearList, 1, 15);
-    printf("%d, %d\n", linearList.elements[0], linearList.elements[1]);
     ListInsert(&linearList, 1, 20); //[20, 15, 10]
-    printf("%d, %d, %d\n", linearList.elements[0], linearList.elements[1], linearList.elements[2]);
-    ListInsert(&linearList, 1, 32);
-    TraverseList(&linearList);
-    ListInsert(&linearList, 1, 45);
-    TraverseList(&linearList);
 
     ElementType previous_element;
     if (PriorElement(&linearList, 20, &previous_element) == SUCCESS) {
@@ -206,7 +199,6 @@ void test_PriorElement()
         exit(1);
     }
 
-    printf("%d, %d, %d\n", linearList.elements[0], linearList.elements[1], linearList.elements[2]);
     PriorElement(&linearList, 10, &previous_element);
     if (previous_element != 15) {
         printf("%d\n", previous_element);

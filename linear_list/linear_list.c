@@ -159,9 +159,9 @@ Status ListInsert(LinearList *linearList, size_t position, ElementType element)
 
     //position的前后元素采用内存复制的形式
     size_t insert_position = position - 1;
-    memcpy(newElements, linearList->elements, insert_position);
+    memcpy(newElements, linearList->elements, insert_position * sizeof(ElementType));
     newElements[insert_position] = element;
-    memcpy(newElements + position, linearList->elements + insert_position, linearList->length - insert_position);
+    memcpy(newElements + position, linearList->elements + insert_position, (linearList->length - insert_position) * sizeof(ElementType));
 
     //linearList的elements指向新分配的数组, 线性表长度加1
     linearList->elements = newElements;
@@ -192,8 +192,8 @@ Status ListDelete(LinearList* linearList, size_t position, ElementType *element)
 
     //position的前后元素采用内存复制的形式
     size_t delete_position = position - 1;
-    memcpy(newElements, linearList->elements, delete_position);
-    memcpy(newElements + delete_position, linearList->elements + position, linearList->length - position);
+    memcpy(newElements, linearList->elements, delete_position * sizeof(ElementType));
+    memcpy(newElements + delete_position, linearList->elements + position, (linearList->length - position) * sizeof(ElementType));
 
     //linearList的elements指向新分配的数组, 线性表长度减1
     linearList->elements = newElements;
