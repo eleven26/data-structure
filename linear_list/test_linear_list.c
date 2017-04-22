@@ -36,7 +36,9 @@ void test_DestroyList()
     LinearList linearList;
     Status result;
 
-    //todo 插入数据
+    ListInsert(&linearList, 1, 10);
+    ListInsert(&linearList, 1, 20);
+
     if((result = DestroyList(&linearList))
        && linearList.length == 0
        && linearList.elements == (ElementType *)0) {
