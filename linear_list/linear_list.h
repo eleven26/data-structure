@@ -21,7 +21,7 @@ typedef int ElementType;
  * length   线性表长度
  */
 typedef struct {
-    ElementType * elements;
+    ElementType *elements;
     size_t length;
 } LinearList;
 
@@ -30,35 +30,35 @@ typedef struct {
  * @param linearList 线性表
  * @return
  */
-Status InitList(LinearList* linearList);
+Status InitList(LinearList *linearList);
 
 /**
  * 销毁线性表linearList (前提: 线性表存在)
  * @param linearList 线性表
  * @return
  */
-Status DestroyList(LinearList* linearList);
+Status DestroyList(LinearList *linearList);
 
 /**
  * 将linearList置为空表
  * @param linearList 线性表
  * @return
  */
-Status ClearList(LinearList linearList);
+Status ClearList(LinearList *linearList);
 
 /**
  * 若linearList为空表, 返回TRUE, 否则返回FALSE (前提: 线性表存在)
  * @param linearList 线性表
  * @return
  */
-Status ListEmpty(LinearList linearList);
+Status ListEmpty(LinearList *linearList);
 
 /**
  * 返回linearList中数据元素个数 (前提: 线性表存在)
  * @param linearList 线性表
  * @return
  */
-Status ListLength(LinearList linearList);
+size_t ListLength(LinearList *linearList);
 
 /**
  * 用element返回linearList中第position个数据元素的值
@@ -68,7 +68,7 @@ Status ListLength(LinearList linearList);
  * @param element 保存位置为position的值
  * @return
  */
-Status GetElement(LinearList linearList, size_t position, ElementType* element);
+Status GetElement(LinearList *linearList, size_t position, ElementType* element);
 
 /**
  * 返回linearList中第一个与element满足关系compare()的数据元素的位置。若这样的数据元素不存在，则返回值为-1
@@ -78,7 +78,7 @@ Status GetElement(LinearList linearList, size_t position, ElementType* element);
  * @param compare 使用来比较的函数的函数指针(返回0的时候表示满足条件)
  * @return
  */
-Status LocateElement(LinearList linearList,
+Status LocateElement(LinearList *linearList,
                           ElementType element,
                           ElementType *result,
                           int compare(ElementType, ElementType));
@@ -92,7 +92,7 @@ Status LocateElement(LinearList linearList,
  * @param previous_element
  * @return
  */
-Status PriorElement(LinearList linearList, ElementType current_element, ElementType* previous_element);
+Status PriorElement(LinearList *linearList, ElementType current_element, ElementType* previous_element);
 
 /**
  * 若current_element是linearList的数据元素，且不是最后一个，
@@ -103,7 +103,7 @@ Status PriorElement(LinearList linearList, ElementType current_element, ElementT
  * @param next_element
  * @return
  */
-Status NextElement(LinearList linearList, ElementType current_element, ElementType* next_element);
+Status NextElement(LinearList *linearList, ElementType current_element, ElementType* next_element);
 
 /**
  * 在linearList中第position个位置之前插入新的数据元素，linearList的长度加1。
@@ -113,7 +113,7 @@ Status NextElement(LinearList linearList, ElementType current_element, ElementTy
  * @param element
  * @return
  */
-Status ListInsert(LinearList linearList, size_t position, ElementType element);
+Status ListInsert(LinearList *linearList, size_t position, ElementType element);
 
 /**
  * 删除linearList的第position个数据元素，并且用element返回其值，linearList的长度减1。
@@ -123,7 +123,7 @@ Status ListInsert(LinearList linearList, size_t position, ElementType element);
  * @param element
  * @return
  */
-Status ListDelete(LinearList linearList, size_t position, ElementType* element);
+Status ListDelete(LinearList *linearList, size_t position, ElementType* element);
 
 /**
  * 依次对linearList的每个数据元素调用函数visit()。一旦visit()失败，则操作失败。
@@ -131,4 +131,4 @@ Status ListDelete(LinearList linearList, size_t position, ElementType* element);
  * @param visit
  * @return
  */
-Status ListTraverse(LinearList linearList, void visit(ElementType));
+Status ListTraverse(LinearList *linearList, void visit(ElementType));
