@@ -131,4 +131,4 @@ Status ListDelete(LinearList *linearList, size_t position, ElementType* element)
  * @param visit
  * @return
  */
-Status ListTraverse(LinearList *linearList, void visit(ElementType));
+Status ListTraverse(LinearList *linearList, Status visit(ElementType));

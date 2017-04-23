@@ -203,14 +203,17 @@ Status ListDelete(LinearList* linearList, size_t position, ElementType *element)
 }
 
 //使用函数visit遍历线性表中的元素
-Status ListTraverse(LinearList* linearList, void visit(ElementType))
+Status ListTraverse(LinearList* linearList, Status visit(ElementType))
 {
     if (!linearList) {
         return FAIL;
     }
 
     for (int i = 0; i < linearList->length; ++i) {
-        visit(linearList->elements[i]);
+        if (visit(linearList->elements[i]) == FALSE) {
+            printf("visit fail.\n");
+            exit(1);
+        }
     }
 
     return SUCCESS;

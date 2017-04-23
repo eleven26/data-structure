@@ -215,6 +215,36 @@ void test_PriorElement()
     printf("test PriorElement success.\n");
 }
 
+void test_NextElement()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 10);
+    ListInsert(&linearList, 1, 15);
+    ListInsert(&linearList, 1, 20); //[20, 15, 10]
+
+    ElementType next_element;
+    if (NextElement(&linearList, 10, &next_element) == SUCCESS) {
+        printf("test NextElement fail.\n");
+        exit(1);
+    }
+
+    NextElement(&linearList, 15, &next_element);
+    if (next_element != 10) {
+        printf("test NextElement fail.\n");
+        exit(2);
+    }
+
+    NextElement(&linearList, 20, &next_element);
+    if (next_element != 15) {
+        printf("test NextElement fail.\n");
+        exit(3);
+    }
+
+    printf("test NextElement success.\n");
+}
+
 void test_ListInsert()
 {
     LinearList linearList;
@@ -239,7 +269,6 @@ void test_ListInsert()
 void test_ListDelete()
 {
     LinearList linearList;
-
     InitList(&linearList);
 
     ListInsert(&linearList, 1, 10);
@@ -261,6 +290,24 @@ void test_ListDelete()
     printf("test ListDelete success.\n");
 }
 
+Status EveryBiggerThanTen(ElementType element)
+{
+    return element <= 10 ? FALSE : TRUE;
+}
+
+void test_ListTraverse()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 11);
+    ListInsert(&linearList, 1, 20);
+
+    ListTraverse(&linearList, EveryBiggerThanTen);
+
+    printf("test ListTraverse success.\n");
+}
+
 int main()
 {
     test_InitList();
@@ -273,4 +320,6 @@ int main()
     test_GetElement();
     test_LocateElement();
     test_PriorElement();
+    test_NextElement();
+    test_ListTraverse();
 }
