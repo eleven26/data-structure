@@ -132,3 +132,49 @@ Status ListDelete(LinearList *linearList, size_t position, ElementType* element)
  * @return
  */
 Status ListTraverse(LinearList *linearList, Status visit(ElementType));
+
+/**
+ * 把linearList1和linearList2合并到newLinearList中
+ * @param linearList1
+ * @param linearList2
+ * @param newLinearList
+ * @return
+ */
+Status MergeLinearList(LinearList *linearList1, LinearList *linearList2, LinearList *newLinearList);
+
+/**
+ * 把一个线性表拆分成两个线性表
+ * @param linearList
+ * @param position 要拆分的位置(必须合法)
+ * @param linearList1
+ * @param linearList2
+ * @return
+ */
+Status DivideLinearList(LinearList *linearList,
+                        size_t position,
+                        LinearList *linearList1,
+                        LinearList *linearList2);
+
+/**
+ * 复制一个线性表
+ * @param linearList
+ * @param newLinearList
+ * @return
+ */
+Status CloneLinearList(LinearList *linearList, LinearList *newLinearList);
+
+/**
+ * union操作，把只存在linearList2中而不存在linearList1中的元素插入到linearList1中
+ * @param linearList1
+ * @param linearList2
+ * @return
+ */
+Status UnionLinearList(LinearList *linearList1, LinearList *linearList2);
+
+/**
+ * 合并两个数据元素按值非递减有序排列的线性表
+ * @param linearList1
+ * @param linearList2
+ * @return
+ */
+Status MergeLinearList(LinearList *linearList1, LinearList *linearList2);
