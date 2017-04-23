@@ -177,4 +177,4 @@ Status UnionLinearList(LinearList *linearList1, LinearList *linearList2);
  * @param linearList2
  * @return
  */
-Status MergeLinearList(LinearList *linearList1, LinearList *linearList2);
+Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2);
