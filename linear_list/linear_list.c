@@ -7,15 +7,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-//初始化线性表，长度初始化为0，元素列表设为空
+// 初始化线性表，长度初始化为0，元素列表设为空
 Status InitList(LinearList *linearList)
 {
-    linearList->length = 0;
-    linearList->elements = (ElementType *)0;
+    linearList->length = (linearList->length == 0 ? 0 : linearList->length);
+    linearList->elements = (ElementType *) calloc(linearList->length, sizeof(ElementType));
+    if (!linearList->elements) {
+        return FAIL;
+    }
     return SUCCESS;
 }
 
-//销毁线性表，长度设置为0，清空元素数组
+// 销毁线性表，长度设置为0，清空元素数组
 Status DestroyList(LinearList *linearList)
 {
     if (!linearList) {
