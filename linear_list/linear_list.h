@@ -178,3 +178,9 @@ Status UnionLinearList(LinearList *linearList1, LinearList *linearList2);
  * @return
  */
 Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2);
+
+/**
+ * 打印线性表(遍历输出线性表元素)
+ * @param linearList
+ */
+void PrintList(LinearList *linearList);

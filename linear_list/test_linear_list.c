@@ -308,6 +308,41 @@ void test_ListTraverse()
     printf("test ListTraverse success.\n");
 }
 
+void test_PrintList()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 11);
+    ListInsert(&linearList, 1, 20);
+    ListInsert(&linearList, 1, 30);
+    ListInsert(&linearList, 1, 78);
+    ListInsert(&linearList, 1, 90);
+    ListInsert(&linearList, 1, 73);
+
+    PrintList(&linearList);
+    printf("test PrintList success.\n");
+}
+
+void test_DivideLinearList()
+{
+    LinearList linearList;
+    InitList(&linearList);
+
+    ListInsert(&linearList, 1, 11);
+    ListInsert(&linearList, 1, 20);
+    ListInsert(&linearList, 1, 30);
+    ListInsert(&linearList, 1, 78);
+    ListInsert(&linearList, 1, 90);
+    ListInsert(&linearList, 1, 73);
+    ListInsert(&linearList, 1, 33);
+    ListInsert(&linearList, 1, 87);
+    ListInsert(&linearList, 1, 23);
+    ListInsert(&linearList, 1, 22);
+
+
+}
+
 int main()
 {
     test_InitList();
@@ -322,4 +357,6 @@ int main()
     test_PriorElement();
     test_NextElement();
     test_ListTraverse();
+
+    test_PrintList();
 }

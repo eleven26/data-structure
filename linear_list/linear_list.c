@@ -218,3 +218,46 @@ Status ListTraverse(LinearList* linearList, Status visit(ElementType))
 
     return SUCCESS;
 }
+
+// 把一个线性表拆分成两个线性表, [0, position), [position, linearList->length)
+Status DivideLinearList(LinearList *linearList,
+                        size_t position,
+                        LinearList *linearList1,
+                        LinearList *linearList2)
+{
+    if (!linearList || !linearList1 || !linearList2) {
+        return FAIL;
+    }
+
+    if (position < 1 || position >= linearList->length) {
+        printf("index out of range.\n");
+        exit(-1);
+    }
+
+    for (int i=0; i<position; ++i) {
+        linearList1->elements[i] = linearList->elements[i];
+    }
+
+    for (int j = position; j < linearList->length; ++j) {
+        linearList2->elements[j-position] = linearList->elements[j];
+    }
+
+    return SUCCESS;
+}
+
+// 打印线性表(遍历输出线性表元素)
+void PrintList(LinearList *linearList)
+{
+    if (!linearList) {
+        printf("请使用有效的线性表参数");
+        exit(-1);
+    }
+
+    for (int i = 0; i < linearList->length; ++i) {
+        if (i < linearList->length - 1) {
+            printf("%d, ", linearList->elements[i]);
+        } else {
+            printf("%d\n", linearList->elements[i]);
+        }
+    }
+}
