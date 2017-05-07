@@ -23,6 +23,8 @@ typedef int ElementType;
 typedef struct {
     ElementType *elements;
     size_t length;
+    size_t real_length;
+    int specific_length;
 } LinearList;
 
 /**
@@ -178,7 +180,7 @@ Status UnionLinearList(LinearList *linearList1, LinearList *linearList2);
  * @param linearList2
  * @return
  */
-Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2);
+Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2, LinearList *mergedLinearList);
 
 /**
  * 打印线性表(遍历输出线性表元素)

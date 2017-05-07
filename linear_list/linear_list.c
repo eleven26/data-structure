@@ -11,6 +11,10 @@
 Status InitList(LinearList *linearList, size_t length)
 {
     linearList->length = length;
+    linearList->real_length = 0;
+    if (length != 0) {
+        linearList->specific_length = TRUE;
+    }
     linearList->elements = (ElementType *) calloc(linearList->length, sizeof(ElementType));
     if (!linearList->elements) {
         return FAIL;
@@ -160,15 +164,25 @@ Status ListInsert(LinearList *linearList, size_t position, ElementType element)
         exit(-1);
     }
 
-    //position的前后元素采用内存复制的形式
-    size_t insert_position = position - 1;
-    memcpy(newElements, linearList->elements, insert_position * sizeof(ElementType));
-    newElements[insert_position] = element;
-    memcpy(newElements + position, linearList->elements + insert_position, (linearList->length - insert_position) * sizeof(ElementType));
+    if (linearList->specific_length) {
+        linearList->elements[position - 1] = element;
+    } else {
+        // position的前后元素采用内存复制的形式
+        size_t insert_position = position - 1;
+        memcpy(newElements, linearList->elements, insert_position * sizeof(ElementType));
+        newElements[insert_position] = element;
+        memcpy(newElements + position, linearList->elements + insert_position,
+               (linearList->length - insert_position) * sizeof(ElementType));
 
-    //linearList的elements指向新分配的数组, 线性表长度加1
-    linearList->elements = newElements;
-    ++linearList->length;
+        //linearList的elements指向新分配的数组, 线性表长度加1
+        linearList->elements = newElements;
+        ++linearList->length;
+    }
+    ++linearList->real_length;
+
+    if (linearList->length == linearList->real_length) {
+        linearList->specific_length = FALSE;
+    }
 
     return SUCCESS;
 }
@@ -252,7 +266,7 @@ Status DivideLinearList(LinearList *linearList,
 void PrintList(LinearList *linearList)
 {
     if (!linearList) {
-        printf("请使用有效的线性表参数");
+        printf("请使用有效的线性表参数\n");
         exit(-1);
     }
 
@@ -269,12 +283,12 @@ void PrintList(LinearList *linearList)
 Status CloneLinearList(LinearList *linearList, LinearList *newLinearList)
 {
     if (!linearList || !newLinearList) {
-        printf("请使用有效的线性表参数");
+        printf("请使用有效的线性表参数\n");
         exit(1);
     }
 
     if (linearList->length != newLinearList->length) {
-        printf("线性表长度不正确");
+        printf("线性表长度不正确\n");
         exit(2);
     }
 
@@ -289,7 +303,7 @@ Status CloneLinearList(LinearList *linearList, LinearList *newLinearList)
 Status UnionLinearList(LinearList *linearList1, LinearList *linearList2)
 {
     if (!linearList1 || !linearList2) {
-        printf("请使用有效的线性表参数");
+        printf("请使用有效的线性表参数\n");
         exit(1);
     }
 
@@ -310,4 +324,38 @@ Status UnionLinearList(LinearList *linearList1, LinearList *linearList2)
 Status equal(ElementType e1, ElementType e2)
 {
     return (e1 == e2 ? 1 : 0);
+}
+
+// 合并两个数据元素按值非递减有序排列的线性表
+Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2, LinearList *mergedLinearList)
+{
+    if (!linearList1 || !linearList2) {
+        printf("请使用有效的线性表参数\n");
+        exit(1);
+    }
+
+    if (mergedLinearList->length != (linearList1->length + linearList2->length)) {
+        printf("合并的线性表长度不匹配\n");
+        exit(2);
+    }
+
+    ElementType e;
+    size_t index = 0, index1 = 0, index2 = 0;
+    for ( ; index1 < linearList1->length && index2 < linearList2->length; ) {
+        if (linearList1->elements[index1] <= linearList2->elements[index2]) {
+            ListInsert(mergedLinearList, ++index, linearList1->elements[index1++]);
+        } else {
+            ListInsert(mergedLinearList, ++index, linearList2->elements[index2++]);
+        }
+    }
+
+    for (; index1 < linearList1->length; ) {
+        ListInsert(mergedLinearList, ++index, linearList1->elements[index1++]);
+    }
+
+    for (; index2 < linearList2->length; ) {
+        ListInsert(mergedLinearList, ++index, linearList2->elements[index2++]);
+    }
+
+    return SUCCESS;
 }

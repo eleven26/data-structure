@@ -199,7 +199,6 @@ void test_PriorElement()
 
     PriorElement(&linearList, 10, &previous_element);
     if (previous_element != 15) {
-        printf("%d\n", previous_element);
         printf("test PriorElement fail.\n");
         exit(2);
     }
@@ -390,29 +389,57 @@ void test_CloneLinearList()
 void test_UnionLinearList()
 {
     LinearList linearList, linearList1;
-    InitList(&linearList, 0);
+    InitList(&linearList, 4);
 
     ListInsert(&linearList, 1, 11);
-    ListInsert(&linearList, 1, 20);
-    ListInsert(&linearList, 1, 30);
-    ListInsert(&linearList, 1, 78);
+    ListInsert(&linearList, 2, 20);
+    ListInsert(&linearList, 3, 30);
+    ListInsert(&linearList, 4, 78);
 
-    InitList(&linearList1, 0);
+    InitList(&linearList1, 3);
     ListInsert(&linearList1, 1, 20);
-    ListInsert(&linearList1, 1, 78);
-    ListInsert(&linearList1, 1, 33);
+    ListInsert(&linearList1, 2, 78);
+    ListInsert(&linearList1, 3, 90);
 
     UnionLinearList(&linearList, &linearList1);
     if (linearList.length != 5) {
         printf("length mismatch!\n");
         test_fail("UnionLinearList");
     }
-    if (linearList.elements[0] != 33 || linearList.elements[1] != 78 ||
-            linearList.elements[2] != 30 || linearList.elements[3] != 20 || linearList.elements[4] != 11) {
+    if (linearList.elements[0] != 90 || linearList.elements[1] != 11 ||
+            linearList.elements[2] != 20 || linearList.elements[3] != 30 || linearList.elements[4] != 78) {
         test_fail("UnionLinearList");
     }
 
     test_success("UnionLinearList");
+}
+
+void test_MergeOrderedLinearList()
+{
+    LinearList linearList1, linearList2, mergedLinearList;
+    InitList(&linearList1, 3);
+    InitList(&linearList2, 2);
+    InitList(&mergedLinearList, 5);
+
+    ListInsert(&linearList1, 1, 20);
+    ListInsert(&linearList1, 2, 30);
+    ListInsert(&linearList1, 3, 33);
+
+    ListInsert(&linearList2, 1, 10);
+    ListInsert(&linearList2, 2, 20);
+
+    MergeOrderedLinearList(&linearList1, &linearList2, &mergedLinearList);
+
+    if (mergedLinearList.length != 5) {
+        test_fail("MergeOrderedLinearList");
+    }
+
+    if (mergedLinearList.elements[0] != 10 || mergedLinearList.elements[1] != 20 || mergedLinearList.elements[2] != 20
+            || mergedLinearList.elements[3] != 30 || mergedLinearList.elements[4] != 33) {
+        test_fail("MergeOrderedLinearList");
+    }
+
+    test_success("MergeOrderedLinearList");
 }
 
 int main()
@@ -434,4 +461,5 @@ int main()
     test_DivideLinearList();
     test_CloneLinearList();
     test_UnionLinearList();
+    test_MergeOrderedLinearList();
 }
