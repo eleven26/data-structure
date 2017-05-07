@@ -389,7 +389,30 @@ void test_CloneLinearList()
 
 void test_UnionLinearList()
 {
+    LinearList linearList, linearList1;
+    InitList(&linearList, 0);
 
+    ListInsert(&linearList, 1, 11);
+    ListInsert(&linearList, 1, 20);
+    ListInsert(&linearList, 1, 30);
+    ListInsert(&linearList, 1, 78);
+
+    InitList(&linearList1, 0);
+    ListInsert(&linearList1, 1, 20);
+    ListInsert(&linearList1, 1, 78);
+    ListInsert(&linearList1, 1, 33);
+
+    UnionLinearList(&linearList, &linearList1);
+    if (linearList.length != 5) {
+        printf("length mismatch!\n");
+        test_fail("UnionLinearList");
+    }
+    if (linearList.elements[0] != 33 || linearList.elements[1] != 78 ||
+            linearList.elements[2] != 30 || linearList.elements[3] != 20 || linearList.elements[4] != 11) {
+        test_fail("UnionLinearList");
+    }
+
+    test_success("UnionLinearList");
 }
 
 int main()
