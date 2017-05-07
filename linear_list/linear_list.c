@@ -8,9 +8,9 @@
 #include <string.h>
 
 // 初始化线性表，长度初始化为0，元素列表设为空
-Status InitList(LinearList *linearList)
+Status InitList(LinearList *linearList, size_t length)
 {
-    linearList->length = (linearList->length == 0 ? 0 : linearList->length);
+    linearList->length = length;
     linearList->elements = (ElementType *) calloc(linearList->length, sizeof(ElementType));
     if (!linearList->elements) {
         return FAIL;

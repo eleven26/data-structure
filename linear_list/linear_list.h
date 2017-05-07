@@ -30,7 +30,7 @@ typedef struct {
  * @param linearList 线性表
  * @return
  */
-Status InitList(LinearList *linearList);
+Status InitList(LinearList *linearList, size_t length);
 
 /**
  * 销毁线性表linearList (前提: 线性表存在)

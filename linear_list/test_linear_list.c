@@ -10,9 +10,9 @@ void test_InitList()
 {
     LinearList linearList;
     Status result;
-    if((result = InitList(&linearList))
+    if((result = InitList(&linearList, 0))
        && linearList.length == 0
-       && linearList.elements == (ElementType *)0) {
+       && linearList.elements) {
         printf("test InitList success.\n");
     } else {
         printf("test InitList fail.\n");
@@ -22,8 +22,8 @@ void test_InitList()
         if (linearList.length != 0) {
             printf("linearList.length != 0\n");
         }
-        if (linearList.elements != (ElementType *)0) {
-            printf("linearList.elements != (Element*)0\n");
+        if (!linearList.elements) {
+            printf("Allocate list memory fail.\n");
         }
 
         printf("\n");
@@ -63,7 +63,7 @@ void test_DestroyList()
 void test_ClearList()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 15);
@@ -80,7 +80,7 @@ void test_ClearList()
 void test_ListEmpty()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     if (ListEmpty(&linearList) == FALSE) {
         printf("test ClearList fail.\n");
@@ -99,7 +99,7 @@ void test_ListEmpty()
 void test_ListLength()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     if (ListLength(&linearList) != 1) {
@@ -119,7 +119,7 @@ void test_ListLength()
 void test_GetElement()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 15);
@@ -152,7 +152,7 @@ int locateElementCompare(ElementType element1, ElementType element2)
 void test_LocateElement()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 15);
@@ -187,7 +187,7 @@ void TraverseList(LinearList *linearList)
 void test_PriorElement()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 15);
@@ -218,7 +218,7 @@ void test_PriorElement()
 void test_NextElement()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 15);
@@ -249,7 +249,7 @@ void test_ListInsert()
 {
     LinearList linearList;
 
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     if (linearList.elements[0] != 10 || linearList.length != 1) {
@@ -269,7 +269,7 @@ void test_ListInsert()
 void test_ListDelete()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 10);
     ListInsert(&linearList, 1, 20);
@@ -278,13 +278,13 @@ void test_ListDelete()
     ListDelete(&linearList, 2, &temp);
     if (linearList.length != 1 || temp != 10) {
         printf("test ListDelete fail.\n");
-        exit(-1);
+        exit(1);
     }
 
     ListDelete(&linearList, 1, &temp);
     if (linearList.length !=0 || temp != 20) {
         printf("test ListDelete fail.\n");
-        exit(-1);
+        exit(2);
     }
 
     printf("test ListDelete success.\n");
@@ -298,7 +298,7 @@ Status EveryBiggerThanTen(ElementType element)
 void test_ListTraverse()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 11);
     ListInsert(&linearList, 1, 20);
@@ -311,7 +311,7 @@ void test_ListTraverse()
 void test_PrintList()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 11);
     ListInsert(&linearList, 1, 20);
@@ -327,7 +327,7 @@ void test_PrintList()
 void test_DivideLinearList()
 {
     LinearList linearList;
-    InitList(&linearList);
+    InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 11);
     ListInsert(&linearList, 1, 20);
