@@ -359,6 +359,34 @@ void test_DivideLinearList()
     test_success("DivideLinearList");
 }
 
+void test_CloneLinearList()
+{
+    LinearList linearList, newLinearList;
+    InitList(&linearList, 0);
+
+    ListInsert(&linearList, 1, 11);
+    ListInsert(&linearList, 1, 20);
+    ListInsert(&linearList, 1, 30);
+    ListInsert(&linearList, 1, 78);
+    ListInsert(&linearList, 1, 90);
+    ListInsert(&linearList, 1, 73);
+    ListInsert(&linearList, 1, 33);
+    ListInsert(&linearList, 1, 87);
+    ListInsert(&linearList, 1, 23);
+    ListInsert(&linearList, 1, 22);
+
+    InitList(&newLinearList, linearList.length);
+    CloneLinearList(&linearList, &newLinearList);
+
+    for (int i = 0; i < linearList.length; ++i) {
+        if (linearList.elements[i] != newLinearList.elements[i]) {
+            test_fail("CloneLinearList");
+        }
+    }
+
+    test_success("CloneLinearList");
+}
+
 int main()
 {
     test_InitList();
@@ -376,4 +404,5 @@ int main()
 
     test_PrintList();
     test_DivideLinearList();
+    test_CloneLinearList();
 }

@@ -156,7 +156,7 @@ Status DivideLinearList(LinearList *linearList,
                         LinearList *linearList2);
 
 /**
- * 复制一个线性表
+ * 克隆一个线性表
  * @param linearList
  * @param newLinearList
  * @return

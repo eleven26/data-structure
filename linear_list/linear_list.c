@@ -264,3 +264,23 @@ void PrintList(LinearList *linearList)
         }
     }
 }
+
+// 克隆一个线性表
+Status CloneLinearList(LinearList *linearList, LinearList *newLinearList)
+{
+    if (!linearList || !newLinearList) {
+        printf("请使用有效的线性表参数");
+        exit(1);
+    }
+
+    if (linearList->length != newLinearList->length) {
+        printf("线性表长度不正确");
+        exit(2);
+    }
+
+    for (int i = 0; i < linearList->length; ++i) {
+        newLinearList->elements[i] = linearList->elements[i];
+    }
+
+    return SUCCESS;
+}
