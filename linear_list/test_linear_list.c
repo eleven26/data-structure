@@ -2,9 +2,8 @@
 // Created by ruby on 4/22/17.
 //
 
+#include "../test.h"
 #include "linear_list.c"
-#include <stdio.h>
-#include <stdlib.h>
 
 void test_InitList()
 {
@@ -15,7 +14,6 @@ void test_InitList()
        && linearList.elements) {
         printf("test InitList success.\n");
     } else {
-        printf("test InitList fail.\n");
         if (result != SUCCESS) {
             printf("result != SUCCESS\n");
         }
@@ -326,7 +324,7 @@ void test_PrintList()
 
 void test_DivideLinearList()
 {
-    LinearList linearList;
+    LinearList linearList, linearList1, linearList2;
     InitList(&linearList, 0);
 
     ListInsert(&linearList, 1, 11);
@@ -340,7 +338,25 @@ void test_DivideLinearList()
     ListInsert(&linearList, 1, 23);
     ListInsert(&linearList, 1, 22);
 
+    size_t divided_position = 4;
+    InitList(&linearList1, divided_position);
+    InitList(&linearList2, linearList.length - divided_position);
 
+    DivideLinearList(&linearList, divided_position, &linearList1, &linearList2);
+
+    for (int i = 0; i < divided_position; ++i) {
+        if (linearList.elements[i] != linearList1.elements[i]) {
+            test_fail("DivideLinearList");
+        }
+    }
+
+    for (int j = divided_position; j < linearList.length; ++j) {
+        if (linearList.elements[j] != linearList2.elements[j-divided_position]) {
+            test_fail("DivideLinearList");
+        }
+    }
+
+    test_success("DivideLinearList");
 }
 
 int main()
@@ -359,4 +375,5 @@ int main()
     test_ListTraverse();
 
     test_PrintList();
+    test_DivideLinearList();
 }
