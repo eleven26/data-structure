@@ -341,7 +341,7 @@ Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2, 
 
     ElementType e;
     size_t index = 0, index1 = 0, index2 = 0;
-    for ( ; index1 < linearList1->length && index2 < linearList2->length; ) {
+    while (index1 < linearList1->length && index2 < linearList2->length) {
         if (linearList1->elements[index1] <= linearList2->elements[index2]) {
             ListInsert(mergedLinearList, ++index, linearList1->elements[index1++]);
         } else {
@@ -349,11 +349,11 @@ Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2, 
         }
     }
 
-    for (; index1 < linearList1->length; ) {
+    while (index1 < linearList1->length) {
         ListInsert(mergedLinearList, ++index, linearList1->elements[index1++]);
     }
 
-    for (; index2 < linearList2->length; ) {
+    while (index2 < linearList2->length) {
         ListInsert(mergedLinearList, ++index, linearList2->elements[index2++]);
     }
 
