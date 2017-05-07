@@ -9,14 +9,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "color.h"
 
 void test_fail(char *message)
 {
-    printf("test %s fail.\n", message);
+    printf(RED "test %s fail.\n", message);
+    printf(RESET);
     exit(1);
 }
 
 void test_success(char *message)
 {
-    printf("test %s success.\n", message);
+    printf(GRN "test %s success.\n", message);
+    printf(RESET);
 }

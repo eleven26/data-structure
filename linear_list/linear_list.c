@@ -78,7 +78,7 @@ Status GetElement(LinearList *linearList, size_t position, ElementType *e)
 //定位满足compare的元素
 Status LocateElement(LinearList *linearList,
                           ElementType e,
-                          size_t *result,
+                          size_t *position,
                           int compare(ElementType, ElementType))
 {
     if (!linearList) {
@@ -87,7 +87,7 @@ Status LocateElement(LinearList *linearList,
     for (int i = 0; i < linearList->length; ++i) {
         if (compare(e, linearList->elements[i])) {
             //compare返回TRUE的时候表示满足条件
-            *result = i + 1;
+            *position = i + 1;
             return SUCCESS;
         }
     }
@@ -283,4 +283,31 @@ Status CloneLinearList(LinearList *linearList, LinearList *newLinearList)
     }
 
     return SUCCESS;
+}
+
+// union操作，把只存在linearList2中而不存在linearList1中的元素插入到linearList1中
+Status UnionLinearList(LinearList *linearList1, LinearList *linearList2)
+{
+    if (!linearList1 || !linearList2) {
+        printf("请使用有效的线性表参数");
+        exit(1);
+    }
+
+    size_t position = -1;
+    for (int i = 0; i < linearList2->length; ++i) {
+        LocateElement(linearList1, linearList2->elements[i], &position, equal);
+        if (position == -1) { // 在linearList1中找不到linearList2的元素
+            ListInsert(linearList1, 1, linearList2->elements[i]);
+        } else {
+            position = -1;
+        }
+    }
+
+    return SUCCESS;
+}
+
+// 判断两个元素是否相等
+Status equal(ElementType e1, ElementType e2)
+{
+    return (e1 == e2 ? 1 : 0);
 }

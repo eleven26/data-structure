@@ -387,6 +387,11 @@ void test_CloneLinearList()
     test_success("CloneLinearList");
 }
 
+void test_UnionLinearList()
+{
+
+}
+
 int main()
 {
     test_InitList();
@@ -405,4 +410,5 @@ int main()
     test_PrintList();
     test_DivideLinearList();
     test_CloneLinearList();
+    test_UnionLinearList();
 }

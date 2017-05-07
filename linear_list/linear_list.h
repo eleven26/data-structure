@@ -75,12 +75,13 @@ Status GetElement(LinearList *linearList, size_t position, ElementType* element)
  * (前提: 线性表linearList存在，compare()是数据元素判定函数)
  * @param linearList 线性表
  * @param element 需要与之比较的元素
+ * @param position 位置(下标+1)
  * @param compare 使用来比较的函数的函数指针(返回0的时候表示满足条件)
  * @return
  */
 Status LocateElement(LinearList *linearList,
                           ElementType element,
-                          size_t *result,
+                          size_t *position,
                           int compare(ElementType, ElementType));
 
 /**
@@ -184,3 +185,11 @@ Status MergeOrderedLinearList(LinearList *linearList1, LinearList *linearList2);
  * @param linearList
  */
 void PrintList(LinearList *linearList);
+
+/**
+ * 判断两个元素是否相等
+ * @param e1
+ * @param e2
+ * @return
+ */
+Status equal(ElementType e1, ElementType e2);
