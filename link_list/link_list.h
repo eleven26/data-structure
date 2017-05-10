@@ -1,0 +1,8 @@
+//
+// Created by ruby on 10/05/2017.
+//
+
+#ifndef DATA_STRUCTURE_LINK_LIST_H
+#define DATA_STRUCTURE_LINK_LIST_H
+
+#endif //DATA_STRUCTURE_LINK_LIST_H
