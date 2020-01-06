@@ -97,6 +97,7 @@ func (l *List) Union(l1 List) {
 		for j := 0; j < l1Len; j++ {
 			if _, ok := l.LocateElem(l1.GetElem(j)); !ok {
 				l.ListInsert(0, l1.GetElem(j))
+				lLen++
 			}
 		}
 	}
