@@ -47,7 +47,7 @@ func (l *List) ListInsert(i, e int) bool {
 	if i < 0 {
 		panic(fmt.Sprintf("Index \"%d\" out of range", i))
 	}
-	if i > len(l.data)-1 {
+	if i > len(l.data) {
 		panic(fmt.Sprintf("Index \"%d\" out of range", i))
 	}
 
@@ -86,6 +86,20 @@ func (l *List) ListDelete(i int) (e int) {
 // 返回线性表的元素个数
 func (l *List) ListLength() int {
 	return len(l.data)
+}
+
+// union 两个线性表
+func (l *List) Union(l1 List) {
+	lLen := l.ListLength()
+	l1Len := l1.ListLength()
+
+	for i := 0; i < lLen; i++ {
+		for j := 0; j < l1Len; j++ {
+			if _, ok := l.LocateElem(l1.GetElem(j)); !ok {
+				l.ListInsert(0, l1.GetElem(j))
+			}
+		}
+	}
 }
 
 /*
@@ -129,4 +143,16 @@ func main() {
 	// 清空线性表
 	l.ClearList()
 	fmt.Printf("length: %d\n", l.ListLength()) // 0
+
+	// 允许在最后插入
+	l.ListInsert(0, 1)
+	fmt.Printf("%v\n", l.data)
+
+	// 合并操作
+	l1 := List{data: []int{3, 1, 2}}
+	l2 := List{data: []int{3, 45, 6}}
+	fmt.Printf("l1 = %v\n", l1)
+	fmt.Printf("l2 = %v\n", l2)
+	l1.Union(l2)
+	fmt.Printf("union result = %v\n", l1)
 }
