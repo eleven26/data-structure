@@ -13,17 +13,17 @@ void println(char *string){
 	printf("%s\n", string);
 }
 
-//ÒÔINIT_SIZEÎª´óĞ¡³õÊ¼»¯ÏßĞÔ±í
+//ä»¥INIT_SIZEä¸ºå¤§å°åˆå§‹åŒ–çº¿æ€§è¡¨
 void init_list(node **L, int size){
 	node *begin_address = calloc(size, sizeof(node));
 	if (!begin_address){
-		println("ÏßĞÔ±í³õÊ¼»¯Ê§°Ü£¡");
+		println("çº¿æ€§è¡¨åˆå§‹åŒ–å¤±è´¥ï¼");
 		exit(1);
 	}
 	*L = begin_address;
 }
 
-//´İ»ÙÏßĞÔ±í
+//æ‘§æ¯çº¿æ€§è¡¨
 int destroy_list(node **L) {
 	if (*L)
 	{
@@ -34,7 +34,7 @@ int destroy_list(node **L) {
 	}
 }
 
-//Çå¿ÕÏßĞÔ±í£¬ºÍÏú»Ù²»Í¬£¬Çå¿ÕµÄÊ±ºò³¤¶È»¹ÊÇÔ­À´µÄ³¤¶È£¬Ö»ÊÇÔ­À´µÄÊı¾İÃ»ÁË
+//æ¸…ç©ºçº¿æ€§è¡¨ï¼Œå’Œé”€æ¯ä¸åŒï¼Œæ¸…ç©ºçš„æ—¶å€™é•¿åº¦è¿˜æ˜¯åŸæ¥çš„é•¿åº¦ï¼Œåªæ˜¯åŸæ¥çš„æ•°æ®æ²¡äº†
 int clear_list(node **list_address){
 	node *p = *list_address;
 	while (p){
@@ -45,7 +45,7 @@ int clear_list(node **list_address){
 	return 0;
 }
 
-//todo ÏßĞÔ±íÊ¹ÓÃmemcpy´úÌæÑ­»·Öğ¸ö¸³Öµ
+//todo çº¿æ€§è¡¨ä½¿ç”¨memcpyä»£æ›¿å¾ªç¯é€ä¸ªèµ‹å€¼
 
 int main(){
 	node *L;
@@ -54,10 +54,10 @@ int main(){
 	clear_list(&L);
 	printf("L[10].data= %d\n", L[10].data);
 	if (destroy_list(&L) == 0){
-		println("Ïú»ÙÏßĞÔ±í³É¹¦");
+		println("é”€æ¯çº¿æ€§è¡¨æˆåŠŸ");
 	}
 	else{
-		println("Ïú»ÙÏßĞÔ±íÊ§°Ü£¡");
+		println("é”€æ¯çº¿æ€§è¡¨å¤±è´¥ï¼");
 	}
 	return 0;
 }
