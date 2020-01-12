@@ -223,6 +223,8 @@ void CreateListTail(DualLinkList *L, int n)
         // 移动游标
         cursor = node;
     }
+
+    cursor->next = *L;
 }
 
 /**
