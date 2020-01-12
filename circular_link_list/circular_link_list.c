@@ -228,13 +228,14 @@ void ClearList(LinkList *L)
  *
  * @param L 链表
  */
-void dump(LinkList L)
+int dump(LinkList L)
 {
     LinkList cursor;
     cursor = L->next;
 
     if (isTail(L, cursor)) {
         printf("(L is empty.)");
+        return ERROR;
     }
 
     while (!isTail(L, cursor)) {
@@ -242,6 +243,8 @@ void dump(LinkList L)
         cursor = cursor->next;
     }
     printf("\n");
+
+    return OK;
 }
 
 int main() {
