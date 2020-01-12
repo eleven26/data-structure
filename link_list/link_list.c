@@ -73,6 +73,7 @@ Status ListInsert(LinkList* L, int i, ElemType e)
 {
     int cursorIndex = -1;
     LinkList cursor = *L;
+    int listEmpty = cursor->next == NULL;
 
     // 游标移动
     while (cursor->next && cursorIndex < i - 1) {
@@ -81,7 +82,7 @@ Status ListInsert(LinkList* L, int i, ElemType e)
     }
 
     // 原链表不存在位置为 i 的元素
-    if (cursor == *L && !cursor->next) {
+    if (listEmpty) {
         // 空链表
         printf("ListInsert: List empty, insert %d to L[0].\n", e);
     } else if (!(cursor->next) || cursorIndex > i - 1) {
