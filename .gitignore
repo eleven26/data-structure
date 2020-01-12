@@ -2,3 +2,8 @@ test
 *.out
 cmake-build-debug
 .idea
+CMakeCache.txt
+CMakeFiles
+*.cbp
+*.cmake
+Makefile
