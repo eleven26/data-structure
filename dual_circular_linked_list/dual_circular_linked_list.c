@@ -3,9 +3,9 @@
 //
 
 /**
- * 双向链表
+ * 双向循环链表
  *
- * 和双向循环链表的差别在于判断结尾节点的方法 isTail。
+ * 和普通的双向链表的差别在于判断结尾节点的方法 isTail。
  */
 
 #include <stdio.h>
@@ -41,10 +41,10 @@ typedef struct Node* DualLinkList; // 定义 LinkList
  */
 Status isTail(DualLinkList L, Node* node)
 {
-    if (node->next)
-        return FALSE;
+    if (L == node->next)
+        return TRUE;
 
-    return TRUE;
+    return FALSE;
 }
 
 /**
