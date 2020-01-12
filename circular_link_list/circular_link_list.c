@@ -1,5 +1,5 @@
 //
-// Created by ruby on 2020/1/7.
+// Created by ruby on 2020/1/12.
 //
 
 // 循环链表
@@ -44,7 +44,7 @@ typedef struct Node
 typedef struct Node* LinkList; // 定义 LinkList
 
 /**
- * 是否 node 是尾节点（判断方式：node->next 是否指向链表头节点）
+ * node 是否是尾节点（判断方式：node->next 是否指向链表头节点）
  *
  * @param L
  * @param node
@@ -59,15 +59,10 @@ Status isTail(LinkList L, Node* node)
 }
 
 /**
- * 单链表的读取
- * 在单链表中，由于第 i 个元素到底在哪？没有办法一开始就知道，必须得从头开始找。
- * 因此，对于单链表实现获取第 i 个元素的数据的操作 GetElem，在算法上，相对要麻烦一些。
+ * 循环链表的读取：获取循环链表 L 中的第 i 个元素，保存到 *e。
  *
- * 获取链表第 i 个数据的算法思路：
- * 1、声明一个节点 p 指向链表第一个节点，初始化 j 从 1 开始
- * 2、当 j < 1 时，就遍历链表，让 p 的指针向后移动，不断指向下一节点，j 累加 1
- * 3、若到链表末尾 p 为空，则说明第 i 个元素不存在
- * 4、若查找成功，返回节点 p 的数据
+ * 1、从第一个元素开始逐个读取链表数据，直到第 i 个元素
+ * 2、获取第 i 个元素里的数据，保存到 *e
  *
  * @param L 线性表
  * @param i 需要读取第 i 个元素
@@ -76,10 +71,8 @@ Status isTail(LinkList L, Node* node)
  */
 Status GetElem(LinkList L, int i, ElemType *e)
 {
-    // 当前游标位置
-    int cursorIndex = 1; // 游标所在索引
-    LinkList cursor;   // 游标
-    cursor = L->next; // 让游标指向第一个节点
+    int cursorIndex = 0; // 游标所在索引
+    LinkList cursor = L->next;   // 游标
 
     // cursor 移动到 i 位置
     while (!isTail(L, cursor) && cursorIndex < i) {
@@ -88,8 +81,10 @@ Status GetElem(LinkList L, int i, ElemType *e)
     }
 
     // 游标到达了结尾，或者传入的索引不存在
-    if (isTail(L, cursor) || cursorIndex > i)
+    if (isTail(L, cursor) || cursorIndex > i) {
+        printf("GetElem fails: unable to locate L[i].\n");
         return ERROR;
+    }
 
     // 取第 i 个元素的数据
     *e = cursor->data;
@@ -98,19 +93,12 @@ Status GetElem(LinkList L, int i, ElemType *e)
 }
 
 /**
- * 单链表插入。 s->next = p->next; p->next = s;
+ * 循环链表的插入。插入元素 e 到循环链表 L 的第 i 个位置。
  *
- * 初始条件：顺序线性表 L 以存在，1 <= i <= ListLength(L)
- * 操作结果：在 L 中第 i 个位置之前插入新的数据元素 e，L 的长度加 1
- *
- * 单链表第 i 个数据插入节点的算法思路:
- * 1、声明一个节点 cursor 指向链表的第一个节点，初始化 index 从 1 开始
- * 2、当 index < i 时，就遍历链表，让 p 的指针向后移动，不断移向下一节点，index 累加 1
- * 3、若到链表末尾 p 为空，则说明第 i 个元素不存在
- * 4、否则查找成功，在系统中生成一个空节点 s
- * 5、将数据元素 e 赋值给 s->data
- * 6、单链表的插入标准语句：s->next = cursor->next; cursor->next = s
- * 7、返回成功
+ * 1、从链表第一个元素开始迭代（头节点直接跳过）
+ * 2、找到第 i - 1 个元素，因为插入元素要和前一个元素（第 i - 1 个元素）连接起来
+ * 3、新建要插入的节点，初始化该节点
+ * 4、把该节点插入第 i - 1 和第 i 个元素之间
  *
  * @param L 要插入的链表
  * @param i 要插入的位置
@@ -119,18 +107,21 @@ Status GetElem(LinkList L, int i, ElemType *e)
  */
 Status ListInsert(LinkList* L, int i, ElemType e)
 {
-    int cursorIndex = 1;        // 从第 1 个节点开始算，目的是拿到第 i - 1 个节点
-    LinkList cursor = *L; // 游标指向第一个节点
+    // 为了可以插入到下标 0 的位置，所以需要从头节点开始迭代，区别于其它一些从第一个元素开始迭代的方法
+    int cursorIndex = -1;
+    LinkList cursor = *L;       // 游标指向头节点
 
     // 游标移动
-    while (!isTail(*L, cursor) && cursorIndex < i) {
+    while (!isTail(*L, cursor->next) && cursorIndex < i - 1) {
         cursor = cursor->next;
         ++cursorIndex;
     }
 
     // 原链表不存在位置为 i 的元素
-    if (isTail(*L, cursor) || cursorIndex > i)
+    if (isTail(*L, cursor->next) || cursorIndex > i - 1) {
+        printf("insert %d into L[%d] fails. \n", e, i);
         return ERROR;
+    }
 
     // 新建需要插入的节点
     Node* s = (Node*)malloc(sizeof(Node));
@@ -144,20 +135,7 @@ Status ListInsert(LinkList* L, int i, ElemType e)
 }
 
 /**
- * 单链表删除节点. p->next = p->next->next;
- *
- * 初始条件：顺序线性表 L 以存在， 1 <= i <= ListLength(L)
- * 操作结果：删除 L 的第 i 个数据元素，并用 e 返回其值，L 的长度减 1
- *
- * 单链表第 i 个数据删除节点的算法思路:
- * 1、声明一节点 cursor 指向链表第一个节点，初始化 index 从 1开始
- * 2、当 index < i 时，就遍历链表，让 cursor 指针向后移动，不断指向下一个节点，index 累加 1
- * 3、若到链表结尾 cursor 为空，则说明第 i 个元素不存在
- * 4、否则查找成功，将欲删除的节点 cursor->next 赋值给 q
- * 5、单链表的删除标准语句 cursor->next = q->next
- * 6、将 q 节点中的数据赋值给 e，作为返回
- * 7、释放 q 节点
- * 8、返回成功
+ * 循环链表删除节点。删除循环链表 L 中第 i 个元素，里面的值使用 *e 保存。
  *
  * 1、从头节点开始遍历，直到第 i - 1 个节点为止（因为要把第 i - 1 这个节点和第 i + 1 个节点连接起来，释放第 i 个节点）
  * 2、定义临时节点 p 保存第 i 个节点
@@ -172,26 +150,28 @@ Status ListInsert(LinkList* L, int i, ElemType e)
  */
 Status ListDelete(LinkList* L, int i, ElemType *e)
 {
-    int cursorIndex = 0;        // 游标位置
+    int cursorIndex = -1;        // 游标位置
     LinkList cursor = *L; // 游标
 
     // 移动游标直到 i - 1 位置
-    while (!isTail(*L, cursor) && cursorIndex < i - 1) {
+    while (!isTail(*L, cursor->next) && cursorIndex < i - 1) {
         cursor = cursor->next;
         ++cursorIndex;
     }
 
     // 判断是否存在
-    if (isTail(*L, cursor) || cursorIndex > i - 1)
+    if (isTail(*L, cursor->next) || cursorIndex > i - 1) {
+        printf("Unable to locate L[%d].\n", i);
         return ERROR;
+    }
 
     // 取得需要删除的节点
-    Node* p = cursor->next;
-    cursor->next = p->next;
-    *e = p->data;
+    Node* node = cursor->next;
+    cursor->next = node->next;
+    *e = node->data;
 
     // 释放节点
-    free(p);
+    free(node);
 
     return OK;
 }
@@ -265,6 +245,7 @@ void dump(LinkList L)
 }
 
 int main() {
+    // 初始化链表
     LinkList L;
     CreateListTail(&L, 5);
     dump(L);
@@ -274,7 +255,28 @@ int main() {
     GetElem(L, 3, &e);
     printf("L[3]=%d\n", e);
 
+    // 插入元素
+    printf("insert 40 to L[2]\n");
+    ListInsert(&L, 2, 40);
+    dump(L);
+
+    // 删除元素
+    ListDelete(&L, 3, &e);
+    printf("delete L[3] from L: %d.\n", e);
+    dump(L);
+
+    // 插入元素到第一位
+    printf("insert 3 to L[0].\n");
+    ListInsert(&L, 0, 3);
+    dump(L);
+
+    // 删除第一位的元素
+    ListDelete(&L, 0, &e);
+    printf("delete L[0] from L: %d.\n", e);
+    dump(L);
+
     // 清空
+    printf("clear L.\n");
     ClearList(&L);
     dump(L);
 }
