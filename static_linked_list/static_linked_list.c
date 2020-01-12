@@ -76,7 +76,6 @@ int GetIdleIndex(StaticLinkedList L)
  */
 void FreeNode(StaticLinkedList L, int i)
 {
-    i++; // i + 1 才是在 L 中的下标
     L[i].next = L[0].next;
     L[i].data = 0;
     L[0].next = i;
@@ -135,7 +134,7 @@ Status ListInsert(StaticLinkedList L, int i, ElemType e)
     }
 
     if (i == 0) {
-        printf("ListInsert: List is empty.\n");
+        printf("ListInsert: insert to list head.\n");
     } else if (!cursor.next || cursorIndex > i - 1) {
         // 不存在 i
         printf("ListInsert: Unable to locate L[%d]\n", i);
@@ -175,10 +174,10 @@ Status ListInsert(StaticLinkedList L, int i, ElemType e)
  */
 Status ListDelete(StaticLinkedList L, int i, ElemType *e)
 {
-    int cursorIndex = -1;
+    int j = -1; // 记录实际链表的下标
     Node cursor = L[MAXSIZE - 1]; // 非空闲链表头节点
     int listEmpty = L[MAXSIZE - 1].next == 0;
-    int current = MAXSIZE - 1;
+    int cursorIndex = MAXSIZE - 1;
 
     if (listEmpty) {
         printf("ListDelete: list empty, delete fails.\n");
@@ -188,13 +187,13 @@ Status ListDelete(StaticLinkedList L, int i, ElemType *e)
     // cursor.next 是每一个元素的 next 域，指示着下一个元素的下标，如果为 0 说明到达了末尾。
 
     // 移动到第 i - 1 个元素处
-    while (cursor.next && cursorIndex < i - 1) {
-        current = cursor.next;
+    while (cursor.next && j < i - 1) {
+        cursorIndex = L[cursorIndex].next;
         cursor = L[cursor.next];
-        ++cursorIndex;
+        ++j;
     }
 
-    if (!cursor.next || cursorIndex > i - 1) {
+    if (!cursor.next || j > i - 1) {
         printf("ListDelete: Unable to locate L[%i]\n", i);
     }
 
@@ -202,13 +201,9 @@ Status ListDelete(StaticLinkedList L, int i, ElemType *e)
     *e = L[cursor.next].data;
 
     // 非空闲链表移除元素（节点变动）
-    if (cursorIndex == -1) {
-        L[MAXSIZE - 1].next = L[cursor.next].next;
-    } else {
-        L[cursor.next].next = L[current].next;
-    }
+    L[cursorIndex].next = L[cursor.next].next;
 
-    FreeNode(L, i);
+    FreeNode(L, cursor.next);
 
     return OK;
 }
@@ -267,6 +262,16 @@ int main()
     dump(L);
     printf("deleted %d\n", e);
 
+    // 删除最后一个元素测试
+    printf("删除最后一个元素测试\n");
+    ListInsert(L, 0, 3);
+    ListInsert(L, 0, 5);
+    ListInsert(L, 1, 7);
+    dump(L);
+    ListDelete(L, 2, &e);
+    printf("deleted %d\n", e);
+    dump(L);
+
     return 0;
 }
 
@@ -279,7 +284,7 @@ int main()
 | 4 | 0 | 0 |
 -------------
 
-ListInsert: List is empty.
+ListInsert: insert to list head.
 
 -------------
 | 0 | 0 | 2 |
@@ -289,7 +294,7 @@ ListInsert: List is empty.
 | 4 | 0 | 1 |
 -------------
 
-ListInsert: List is empty.
+ListInsert: insert to list head.
 
 -------------
 | 0 | 0 | 3 |
@@ -333,12 +338,34 @@ deleted 5
 deleted 3
 
 -------------
-| 0 | 0 | 1 |
-| 1 | 0 | 1 |
+| 0 | 0 | 3 |
+| 1 | 0 | 2 |
 | 2 | 0 | 0 |
-| 3 | 7 | 0 |
+| 3 | 0 | 1 |
 | 4 | 0 | 0 |
 -------------
 
 deleted 7
+删除最后一个元素测试
+ListInsert: insert to list head.
+ListInsert: insert to list head.
+
+-------------
+| 0 | 0 | 0 |
+| 1 | 5 | 2 |
+| 2 | 7 | 0 |
+| 3 | 3 | 1 |
+| 4 | 0 | 3 |
+-------------
+
+deleted 7
+
+-------------
+| 0 | 0 | 2 |
+| 1 | 5 | 0 |
+| 2 | 0 | 0 |
+| 3 | 3 | 1 |
+| 4 | 0 | 3 |
+-------------
+
  */
