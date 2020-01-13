@@ -28,8 +28,6 @@ typedef struct {
  */
 Status InitList(List *L)
 {
-    L = (List*)malloc(sizeof(L));
-
     for (int i = 0; i < MAXSIZE; ++i) {
         (*L).data[i] = 0;
     }
@@ -52,7 +50,7 @@ void dump(List L)
         return;
     }
 
-    for (int i = 0; i < L.length; ++i) {
+    for (int i = 0; i < L.size; ++i) {
         printf("%d ", L.data[i]);
     }
     printf("\n");
@@ -66,24 +64,53 @@ void dump(List L)
  * @param e 要插入的元素
  * @return 1-成功 0-失败
  */
-Status ListInsert(List L, int i, ElemType e)
+Status ListInsert(List *L, int i, ElemType e)
 {
-    ElemType temp;
-
     // 临界条件判断
-    if (i < 0 || i > L.length) {
-        printf("ListInsert: index out of range.\n");
+    if (i < 0 || i > (*L).length || (*L).length >= (*L).size) {
+        printf("ListInsert: index out of range, insert %d fails.\n", e);
         return ERROR;
     }
 
+    (*L).length++;
+
     // 从 i 开始往后移动
     // 边界：最后一位
-    for (int j = L.length - 1; j > i; --j) {
+    for (int j = (*L).length - 1; j > i; --j) {
+        (*L).data[j] = (*L).data[j - 1];
     }
 
     // 插入新数据到第 i 位
-    L.data[i] = e;
-    L.length++;
+    (*L).data[i] = e;
+
+    return OK;
+}
+
+/**
+ * 从线性表 L 删除第 i 个元素，保存其值到 *e
+ *
+ * @param L 要操作的线性表
+ * @param i 要删除的下标
+ * @param e 要保存的元素
+ * @return 1-成功 0-失败
+ */
+Status ListDelete(List *L, int i, ElemType *e)
+{
+    if (i < 0 || i > (*L).length - 1) {
+        printf("ListDelete: %d out of range.\n", i);
+        return ERROR;
+    }
+
+    // 保存要删除的元素
+    *e = (*L).data[i];
+
+    // 线性表前移
+    for (int j = i; j < (*L).length; ++j) {
+        (*L).data[j] = (*L).data[j + 1];
+    }
+
+    // 长度减少
+    (*L).length--;
 
     return OK;
 }
@@ -93,6 +120,31 @@ int main()
     // 初始化线性表并打印
     List L;
     InitList(&L);
+    dump(L);
+
+    // 插入元素测试
+    ListInsert(&L, 0, 2);
+    dump(L);
+    ListInsert(&L, 0, 4);
+    dump(L);
+    ListInsert(&L, 1, 5);
+    dump(L);
+    ListInsert(&L, 1, 7);
+    ListInsert(&L, 1, 8);
+    dump(L);
+    ListInsert(&L, 1, 12);
+    dump(L);
+
+    // 删除元素测试
+    ElemType e;
+    ListDelete(&L, 1, &e);
+    printf("delete L[%d] = %d\n", 1, e);
+    dump(L);
+    ListDelete(&L, 0, &e);
+    ListDelete(&L, 0, &e);
+    ListDelete(&L, 0, &e);
+    dump(L);
+    ListDelete(&L, 0, &e);
     dump(L);
 
     return 0;
