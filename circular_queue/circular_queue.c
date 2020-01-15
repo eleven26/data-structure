@@ -75,6 +75,17 @@ Status DeQueue(SqQueue *Q, ElemType *e)
 }
 
 /**
+ * 返回队列长度
+ *
+ * @param Q 循环队列
+ * @return 队列长度
+ */
+int QueueLength(SqQueue Q)
+{
+    return (Q.rear - Q.front + MAXSIZE) % MAXSIZE;
+}
+
+/**
  * 打印循环队列
  *
  * @param Q 循环队列
@@ -109,6 +120,8 @@ int main()
     EnQueue(&Q, 8);
     EnQueue(&Q, 10);
     dump(Q);
+
+    printf("Q length: %d\n", QueueLength(Q));
 
     // 出循环队列
     printf("出队列:\n");
