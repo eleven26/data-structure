@@ -67,9 +67,8 @@ Status DeQueue(SqQueue *Q, ElemType *e)
         return ERROR;
     }
 
-    int index = (Q->rear - 1 + MAXSIZE) % MAXSIZE;
-    Q->rear = index;
-    *e = Q->data[index];
+    *e = Q->data[Q->front];
+    Q->front = (Q->front + 1) % MAXSIZE;
 
     return OK;
 }
